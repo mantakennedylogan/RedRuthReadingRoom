@@ -1,6 +1,0 @@
-{
-  "devDependencies": {
-    "@cucumber/cucumber": "^9.1.2",
-    "mocha": "^10.2.0"
-  }
-}
