@@ -1,12 +1,19 @@
 # RedRuthReadingRoom
-To test Gurkins
-  download project
-  go to hellocucumber
-  run mvn test
+* To test Gurkins 
+
+  - Download project
   
-  Note: This will not build to do the fact that there is no classes defined currently.
+  - Go to hellocucumber
   
-To test unit tests
-  in project root dirictory
-  run ./node_modules/mocha/bin/mocha.js
+  - Run mvn test
+  
+  
+  <strong>Note</strong>: This will not build to do the fact that there is no classes defined currently.
+  <br></br>
+* To test Unit Tests
+
+  - In project root dirictory
+  
+  - Run ./node_modules/mocha/bin/mocha.js
+  
   
