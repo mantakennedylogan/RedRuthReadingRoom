@@ -46,7 +46,11 @@ server.get('/api/getprompt', (req, res) => {
     let prompt_id = req.query.prompt_id;
     if (Number.isInteger(Number(prompt_id))) {
         connection.query('SELECT prompt_id, prompt, description, public_flg FROM t_prompt WHERE prompt_id = ? ORDER BY prompt_id DESC', [prompt_id], function (error, results, fields) {
-        if (error) throw error;
+        //if (error) throw error;
+        if (error) {
+            console.error('prompt_id is this: ' + prompt_id);
+
+        }
         res.json(results[0]);
         });
     }

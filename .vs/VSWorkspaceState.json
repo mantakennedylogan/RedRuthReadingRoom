@@ -1,0 +1,16 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\redruthreforged-master",
+    "\\redruthreforged-master\\src",
+    "\\redruthreforged-master\\src\\Components",
+    "\\redruthreforged-master\\src\\Components\\Record",
+    "\\redruthreforged-master\\src\\Components\\Record\\RecordingBox",
+    "\\redruthreforged-master\\src\\Components\\Record\\RecordingInstructions",
+    "\\redruthreforged-master\\src\\Context",
+    "\\redruthreforged-server-master",
+    "\\redruthreforged-server-master\\src"
+  ],
+  "SelectedNode": "\\redruthreforged-master\\src\\Components\\Record\\Record.jsx",
+  "PreviewInSolutionExplorer": false
+}
