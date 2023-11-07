@@ -1,6 +1,6 @@
 import React from 'react'
-import RecordingTool from './RecordingTool/RecordingTool'
 import AudioRecorder from "./AudioRecorder";
+import SubmitForm from './SubmitForm';
 
 
 function RecordingBox(props) {
@@ -9,7 +9,8 @@ function RecordingBox(props) {
             <h4>Prompt: {props.prompt}</h4>
             <h5>Description: {props.desc}</h5>
             <p>Ready to record</p>
-            <AudioRecorder />      
+            <AudioRecorder />  
+            <SubmitForm />    
         </div>
     )
 }
