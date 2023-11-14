@@ -1,4 +1,7 @@
 import { useState, useRef } from "react";
+import AWS from 'aws-sdk';
+
+import ReactS3 from 'react-s3';
 
 const mimeType = "audio/webm";
 
@@ -65,7 +68,71 @@ const AudioRecorder = () => {
 		};
 	};
 
+	// Function to upload file to s3
+	// const uploadFile = async () => {
+	// 	// S3 Bucket Name
+	// 	const S3_BUCKET = "redruth-bucket";
+	
+	// 	// S3 Region
+	// 	const REGION = "us-west-2";
+	
+	// 	// S3 Credentials
+	// 	AWS.config.update({
+	// 	  accessKeyId: "AKIA2WTBG4K3GELKESGS",
+	// 	  secretAccessKey: "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",
+	// 	});
+	// 	const s3 = new AWS.S3({
+	// 	  params: { Bucket: S3_BUCKET },
+	// 	  region: REGION,
+	// 	});
+
+	// 	// Files Parameters
+
+	// 	const params = {
+	// 		Bucket: S3_BUCKET,
+	// 		Key: "Se7en audio name",
+	// 		Body: audio,
+	// 	  };
+	  
+	// 	  // Uploading file to s3
+	  
+	// 	  var upload = s3
+	// 		.putObject(params)
+	// 		.on("httpUploadProgress", (evt) => {
+	// 		  // File uploading progress
+	// 		  console.log(
+	// 			"Uploading " + parseInt((evt.loaded * 100) / evt.total) + "%"
+	// 		  );
+	// 		})
+	// 		.promise();
+	  
+	// 	  await upload.then((err, data) => {
+	// 		console.log(err);
+	// 		// Fille successfully uploaded
+	// 		alert("audio uploaded successfully.");
+	// 	  });
+	// };
+
+	const config = {
+		bucketName: 'redruth-bucket',
+		region: 'us-west-2',
+		accessKeyId: 'AKIA2WTBG4K3GELKESGS',
+		secretAccessKey: 'LQNAcBUrON8jOshkRoYrAROnkhWbQgX4zuoSgL2Y+DEkgDxe6veFosBT7eUgEXAMPLE',
+	}
+
+	function uploadFile(audio) {
+		ReactS3.upload(audio, config)
+		.then(data => console.log(data))
+		.catch(err => console.error(err))	
+	}
+
 	return (
+		<>
+
+		<script src="https://sdk.amazonaws.com/js/aws-sdk-2.1491.0.min.js"></script>
+
+		
+
 		<div>
 			<h2>Audio Recorder</h2>
 			<main>
@@ -92,10 +159,13 @@ const AudioRecorder = () => {
 						<a download href={audio}>
 							Download Recording
 						</a>
+
+        				<button onClick={uploadFile(audio)}>Upload</button>
 					</div>
 				) : null}
 			</main>
 		</div>
+		</>
 	);
 };
 
