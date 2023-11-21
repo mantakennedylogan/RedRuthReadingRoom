@@ -54,7 +54,8 @@ export const AdminProvider = ({ children }) => {
     const [currentView, setCurrentView] = useState('home')
 
     // Authentication. THIS SHOULD BE HANDLED IN COOKIES OR SOMETHING, AS WE LOSE AUTHENTICATION ON REFRESH!
-    const [userID, setUserID] = useState(1);
+    // This is where the user_id is set. Site currently only handles 1 user with ID of 12345.
+    const [userID, setUserID] = useState(12345);
 
     return (
         <AdminContext.Provider value={{
