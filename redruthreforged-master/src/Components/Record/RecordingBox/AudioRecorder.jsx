@@ -1,21 +1,19 @@
 import { useState, useRef } from "react";
-import AWS from 'aws-sdk';
-
+/*import AWS from 'aws-sdk'
 import ReactS3 from 'react-s3';
 
+import { ConfigurationServicePlaceholders } from "aws-sdk/lib/config_service_placeholders";
+*/
+
+import axios from '../../../API/axios';
 const mimeType = "audio/webm";
 
 const AudioRecorder = () => {
 	const [permission, setPermission] = useState(false);
-
 	const mediaRecorder = useRef(null);
-
 	const [recordingStatus, setRecordingStatus] = useState("inactive");
-
 	const [stream, setStream] = useState(null);
-
 	const [audio, setAudio] = useState(null);
-
 	const [audioChunks, setAudioChunks] = useState([]);
 
 	const getMicrophonePermission = async () => {
@@ -119,19 +117,27 @@ const AudioRecorder = () => {
 		accessKeyId: 'AKIA2WTBG4K3GELKESGS',
 		secretAccessKey: 'LQNAcBUrON8jOshkRoYrAROnkhWbQgX4zuoSgL2Y+DEkgDxe6veFosBT7eUgEXAMPLE',
 	}
-
+/*
 	function uploadFile(audio) {
 		ReactS3.upload(audio, config)
 		.then(data => console.log(data))
 		.catch(err => console.error(err))	
 	}
+	*/
+	function uploadFile(john){
+
+		try{
+			axios.post('/api/upload',{'audio':john}).then((response)=>{
+				console.log(response);
+			});
+		}
+		catch (e) {
+			console.log("Axios fail :(");
+		}
+	}
 
 	return (
-		<>
-
-		<script src="https://sdk.amazonaws.com/js/aws-sdk-2.1491.0.min.js"></script>
-
-		
+		<>		
 
 		<div>
 			<h2>Audio Recorder</h2>

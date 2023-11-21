@@ -1,6 +1,8 @@
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
+const fs = require('fs');
+
 
 // TODO: Secure API w/ authorization... JWT tokens or something
 // TODO: Fix env processing
@@ -192,4 +194,47 @@ server.get('/api/admin/update/collectionpubliclistenflg', (req, res) => {
 //         if (error) throw error;
 //         res.json(results);
 //         });
-// })
+// })]
+
+
+require('dotenv').config();
+
+server.set('json spaces', 5); // to pretify json response
+
+const fileparser = require('./fileparser');
+/*
+server.get('/api/uploadFile', (req, res) => {
+  res.send(`
+    <h2>File Upload With <code>"Node.js"</code></h2>
+    <form action="/api/upload" enctype="multipart/form-data" method="post">
+      <div>Select a file: 
+        <input name="file" type="file" />
+      </div>
+      <input type="submit" value="Upload" />
+    </form>
+
+  `);
+});*/
+
+server.post('/api/upload/', async (req, res) => {
+    var myFile = new File(req.body.audio, 'image.jpeg', {
+        type: myBlob.type,
+    }); 
+    //var file = new fs.readFileSync(req.body.audio, 'utf8');
+   console.log(req) 
+  await fileparser(req)
+  .then(data => {
+    res.status(200).json({
+      message: "Success",
+      data
+    })
+  })
+  .catch(error => {
+    res.status(400).json({
+      message: "An error occurred.",
+      error
+    })
+  })
+  
+});
+
