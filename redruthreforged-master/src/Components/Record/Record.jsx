@@ -13,17 +13,28 @@ function Record() {
     const [validatedPrompt, setValidatedPrompt] = useState(false);
     const { prompt_id_url } = useParams();
 
+    //const [prompt_id_url, set_prompt_id_url] = useState(666);
+
+    console.log("prompt id: " + prompt_id_url);
+        // useParams();
+
+
     // Call database for prompt associated with promptid in queryParameters.
     useEffect(() => {
         if (Number.isInteger(Number(prompt_id_url)) && prompt_id_url !== null && !validatedPrompt) {
+            console.log("before axios try block");
             try {
+                console.log("inside try block");
                 axios.get('/api/getprompt?prompt_id=' + prompt_id_url).then((response) => {
+                    console.log("inside axios block");
                     if (response.data !== '') {
+                        console.log("inside if statement block");
                         setValidatedPrompt(true);
                         setPromptID(response.data.prompt_id);
                         setPrompt(response.data.prompt);
                         setDesc(response.data.description);
                     }
+                    console.log("after if statement");
                 });
             } catch (e) {
                 console.log("Axios fail :(")
