@@ -20,9 +20,7 @@ function NavbarButton(props) {
 			<Typography>
 				<Link to={props.link} style={linkStyle}>{props.name}</Link>
 			</Typography>
-
 		</Button>
-
 	)
 }
 

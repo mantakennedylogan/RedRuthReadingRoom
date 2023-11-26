@@ -5,6 +5,8 @@ import { useContext } from 'react';
 import { AccountContext } from '../Account';
 import { Box } from '@mui/system';
 import AccountMenu from './AccountMenu';
+import { Link } from 'react-router-dom';
+import { Button, Typography } from '@mui/material'
 
 // This component returns the global navbar at the top of the page.
 // Returns the navbar and all associated buttons.
@@ -24,20 +26,25 @@ function Navbar() {
 
     return (
         <AppBar position="fixed" sx={navbarStyle}>
-            <Box sx={{ minWidth: 320 }}>
-                <NavbarButton link="/" name="Home" />
-                <NavbarButton link="/record" name="Record" />
-                <NavbarButton link="/listen" name="Listen" />
-                <NavbarButton link="/admin" name="Research" />
+            <Box> 
+                <Button>
+                    <Typography>
+                        <Link to={"/"} style={{textDecoration: 'none',
+		                    color: 'white', fontWeight: 'bold', fontSize: "1.10rem",}}>REDRUTH READING ROOM</Link>
+                    </Typography>
+                </Button>
             </Box>
-
-            <div>
-                {status ?
-                    <AccountMenu  />
-                    :
-                    <NavbarButton link="/login" name="LogIn" />
-                }
-            </div>
+        
+            <Box sx={{display:'flex'}}>
+                <NavbarButton link="/listen" name="Listen" />
+                <div>
+                    {status ?
+                        <AccountMenu  />
+                        :
+                        <NavbarButton link="/login" name="LogIn" />
+                    }
+                </div>
+            </Box>   
         </AppBar>
     )
 }

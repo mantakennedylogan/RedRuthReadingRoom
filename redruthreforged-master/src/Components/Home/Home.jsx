@@ -1,15 +1,25 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
+import { Box } from '@mui/system';
+import Typography from '@mui/material/Typography';
+import img from '../../images/intro.png';
 
 function Home() {
+
     return (
-        <div className='homepage'>
-            <h1>The Redruth Reading Room Project</h1>
+        <Box sx={{display: 'flex', justifyContent: 'space-between'}}>
+            <Box sx={{display: "flex", flexDirection: "column", justifyContent: "center", paddingLeft: '50px'}}>
+                <Typography level="h1" fontWeight={'fontWeightLight'} fontSize={40}>Unlock Voices, Ignite Insights:</Typography>
+                <Typography fontWeight="fontWeightBold" fontSize={80} sx={{lineHeight: "85px"}}>Redruth <br></br> Reading Room</Typography>
+                <Typography fontSize={25} fontWeight={'fontWeightLight'}>Your gateway to effortless audio gathering for <br></br>
+                    research, museums, and organizations. Start your <br></br>
+                    journey with Redruth Reading Room today!</Typography>
+            </Box>
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-
-            <Link to="/record">Get started!</Link>
-        </div>
+            <Box sx={{display: 'flex', height: 782}}> 
+                <img src={img} alt="Logo" />
+            </Box>
+        </Box>
     )
 }
 
