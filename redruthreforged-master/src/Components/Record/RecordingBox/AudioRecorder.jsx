@@ -5,6 +5,9 @@ import ReactS3 from 'react-s3';
 import { ConfigurationServicePlaceholders } from "aws-sdk/lib/config_service_placeholders";
 */
 
+import disabledMic from "../../../images/disabledMic.png";
+import neutralMic from "../../../images/neutralMic.png";
+import recordingMic from "../../../images/recordingMic.png";
 import axios from '../../../API/axios';
 const mimeType = "audio/webm";
 
@@ -140,33 +143,27 @@ const AudioRecorder = () => {
 		<>		
 
 		<div>
-			<h2>Audio Recorder</h2>
 			<main>
-				<div className="audio-controls">
+				<div className="audio-controls" style={{textAlign: 'center', marginTop: '5rem' }}>
 					{!permission ? (
-						<button onClick={getMicrophonePermission} type="button">
-							Get Microphone
-						</button>
+						<img  onClick={getMicrophonePermission} style={{height: 150, }} src={disabledMic}/>
 					) : null}
 					{permission && recordingStatus === "inactive" ? (
-						<button onClick={startRecording} type="button">
-							Start Recording
-						</button>
+						<img  onClick={startRecording} style={{height: 150, }} src={neutralMic}/>
 					) : null}
 					{recordingStatus === "recording" ? (
-						<button onClick={stopRecording} type="button">
-							Stop Recording
-						</button>
+						<img  onClick={stopRecording} style={{height: 150, }} src={recordingMic}/>
 					) : null}
 				</div>
 				{audio ? (
-					<div className="audio-player">
+					<div className="audio-player" style={{textAlign: 'center', marginTop: '3rem' }}>
 						<audio src={audio} controls></audio>
-						<a download href={audio}>
+						<br></br>
+						<a download href={audio} style={{color: '#323f54', textDecoration: 'none', fontSize: 12}}>
 							Download Recording
 						</a>
-
-        				<button onClick={uploadFile(audio)}>Upload</button>
+						<br></br>
+        				<button onClick={uploadFile(audio)} style={{marginTop: '3rem', background:'#323f54', color: '#faf9f6', fontSize: 20, borderRadius: 5, padding: 10, paddingLeft:20, paddingRight:20 }}>SUBMIT</button>
 					</div>
 				) : null}
 			</main>
