@@ -124,8 +124,10 @@ const AudioRecorder = () => {
 		.catch(err => console.error(err))	
 	}
 	*/
-	function uploadFile(john){
-
+	const uploadFile = (event) =>{
+		console.log("LOG");
+		console.log("this is the payloat" + event.target[0].value);
+		var john = event.target[0].value;
 		try{
 			axios.post('/api/upload',{'audio':john}).then((response)=>{
 				console.log(response);
@@ -159,6 +161,17 @@ const AudioRecorder = () => {
 						</button>
 					) : null}
 				</div>
+		
+
+				<h2>File Upload With <code>"Node.js"</code></h2>
+					<form onSubmit={uploadFile} encType="multipart/form-data">
+					<div>Select a file: 
+						<input name="file" type="file" />
+					</div>
+					<input type="submit" value="Upload" />
+					</form>
+		
+		
 				{audio ? (
 					<div className="audio-player">
 						<audio src={audio} controls></audio>

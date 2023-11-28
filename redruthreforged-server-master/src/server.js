@@ -1,7 +1,10 @@
+import {File} from 'file-api';
+import fileparser from './fileparser.js';
 const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
 const fs = require('fs');
+
 
 
 // TODO: Secure API w/ authorization... JWT tokens or something
@@ -197,11 +200,11 @@ server.get('/api/admin/update/collectionpubliclistenflg', (req, res) => {
 // })]
 
 
-require('dotenv').config();
+//require('.env').config();
 
 server.set('json spaces', 5); // to pretify json response
 
-const fileparser = require('./fileparser');
+
 /*
 server.get('/api/uploadFile', (req, res) => {
   res.send(`
@@ -217,12 +220,13 @@ server.get('/api/uploadFile', (req, res) => {
 });*/
 
 server.post('/api/upload/', async (req, res) => {
-    var myFile = new File(req.body.audio, 'image.jpeg', {
+    /*var myFile = new File(req.body.audio, 'image.jpeg', {
         type: myBlob.type,
-    }); 
+    });*/ 
     //var file = new fs.readFileSync(req.body.audio, 'utf8');
-   console.log(req) 
-  await fileparser(req)
+   console.log(req.body.audio) 
+   var up = File(req.body.audio);
+  await fileparser(req.body.audio)
   .then(data => {
     res.status(200).json({
       message: "Success",
