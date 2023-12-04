@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom';
 import axios from '../../API/axios';
 import RecordingBox from './RecordingBox/RecordingBox';
+import { Typography } from '@mui/material';
 
 // TODO: Set 
 
@@ -45,8 +46,17 @@ function Record() {
 
     return (
         <div className='recordpage'>
-            <h1>Record</h1>
             {validatedPrompt ?
+                <RecordingBox prompt={prompt} desc={desc} promptid={promptID}/>
+                :
+                <>                
+                <Typography sx={{fontSize: 60, m: '10rem', mb:'2rem', fontWeight: 'bold'}} align='center'>Oops theres nothing here!</Typography>
+                <Typography sx={{fontSize: 24}} align='center'>Please contact the researcher that sent you this link</Typography>
+                </>
+            }
+
+            {/* DONT REALLY NEED THIS SINCE THERE IS NO PUBLIC RECORDING LINK ANYMORE - KEEPING UNTIL WE FULLY AGREE ON THIS */}
+            {/* {validatedPrompt ?
                 <RecordingBox prompt={prompt} desc={desc} promptid={promptID}/>
                 :
                 <>
@@ -60,7 +70,7 @@ function Record() {
                     <li>Enter the required information (denoted with an asterisk), then optionally fill out the remaining fields. The optional information will likely help the researcher.</li>
                     <li>Hit submit and you're done!</li>
                 </ol>
-                </>}
+            </>} */}
         </div>
     )
 }
