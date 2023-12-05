@@ -1,3 +1,18 @@
+# Overview
+
+## About
+
+## Functionality
+* Login
+  *    
+* Home page
+  * Overview of the website 
+* Record page
+* Admin Resources
+  * Admin Home
+  * Inbox
+
+
 #  Redruth Reading Room Application - React Client (redruthforged-master)
 This is what the user sees!
 
@@ -9,6 +24,7 @@ This is what the user sees!
 * To install the package on package.json just run
 
   - npm install
+  - 
 
 * To run the application for development purposes
 
