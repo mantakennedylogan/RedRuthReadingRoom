@@ -2,15 +2,20 @@
 
 ## About
 
-## Functionality
-* Login
-  *    
-* Home page
-  * Overview of the website 
+The Redruth Reading Room serves as a platform for administrators to generate audio collections aimed at collecting oral testimonies from specific participants. Admin users have the capability to oversee and handle audio submissions, while participants can record and upload their audio responses
+
+## Current Functionality
+* Admin users can login
+     - Email: test@gmail.com
+     - Password: @Test123
+* Home page has introductory content
 * Record page
-* Admin Resources
-  * Admin Home
-  * Inbox
+      - Displays error when invalid prompt url is given
+       - If given valid prompt url, prompt and discription appears along with a place to record and submit the audio recording
+* Research Tab
+     - Home: All current collections appear with accurate collection information
+     - Inbox: all submitted audios appear. Audio playback currently unavailable, but response display is visible and accurate.
+     - Edit & Publish: To be implemented 
 
 
 #  Redruth Reading Room Application - React Client (redruthforged-master)
@@ -21,31 +26,29 @@ This is what the user sees!
 
   - Clone this repository
 
-* To install the package on package.json just run
+* To install the necessary packages run
 
-  - npm install
-  - 
+  - make install
 
-* To run the application for development purposes
-
-  - npm start
+* To run the application for development purposes run 'make'
 
   - This will start the application on 127.0.0.1:3000
 
 
 # Redruth Reading Room Application - Server (redruthforged-server-master)
-Mainly handles database reads/writes
+handles database reads/writes
 
 * How do I get set up?
   - Install node
 
   - Clone this repository
 
-  - To install the package on package.json just run npm install
+  - Navigate to the directory
+    
+  - Install necessary packages by running 'make install'
 
-  - To run the application for development purposes
+  - To run the application for development purposes run 'make'
 
-  - npm start
 
     - This will start the application on 127.0.0.1:8000
 
