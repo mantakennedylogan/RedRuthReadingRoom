@@ -90,7 +90,7 @@ server.get('/api/admin/getunlistenedrecordingsbycollection', (req, res) => {
 // Type: ADMIN :: DB Query
 // Overview: Called by clicking a recording
 // Accepts: file_id
-// Returns: 
+// Returns: metadata for the audio file
 server.get('/api/admin/getrecording', (req, res) => {
     let file_id = req.query.file_id;
     connection.query('SELECT taf.file_id, tp.prompt, taf.name, taf.email, taf.phone_num, taf.postal_code, taf.title, taf.remarks, taf.timestamp, taf.file_length FROM t_audio_file as taf JOIN t_prompt tp ON tp.prompt_id = taf.prompt_id LEFT JOIN t_audio_file_metadata as tafm ON taf.file_id = tafm.file_id WHERE taf.file_id = ?', [file_id], function (error, results, fields) {
@@ -216,25 +216,31 @@ server.get('/api/uploadFile', (req, res) => {
   `);
 });*/
 
-server.post('/api/upload/', async (req, res) => {
-    var myFile = new File(req.body.audio, 'image.jpeg', {
-        type: myBlob.type,
-    }); 
+
+server.post('/api/upload', async (req, res) => {
+    // var myFile = new File(req.body.audio, 'image.jpeg', {
+    //     type: myBlob.type,
+    // }); 
+    const audioFile = req.body.audio;
+
+    connection.query('SELECT taf.file_id, tp.prompt, taf.name, taf.email, taf.phone_num, taf.postal_code, taf.title, taf.remarks, taf.timestamp, taf.file_length FROM t_audio_file as taf JOIN t_prompt tp ON tp.prompt_id = taf.prompt_id LEFT JOIN t_audio_file_metadata as tafm ON taf.file_id = tafm.file_id WHERE taf.file_id = ?', [file_id], function (error, results, fields) {
+        if (error) throw error;
+        res.json(results);
+    });
     //var file = new fs.readFileSync(req.body.audio, 'utf8');
-   console.log(req) 
-  await fileparser(req)
-  .then(data => {
-    res.status(200).json({
-      message: "Success",
-      data
+    console.log(req) 
+    await fileparser(req)
+      .then(data => {
+        res.status(200).json({
+          message: "Success",
+          data
+        })
     })
-  })
-  .catch(error => {
-    res.status(400).json({
-      message: "An error occurred.",
-      error
+    .catch(error => {
+        res.status(400).json({
+          message: "An error occurred.",
+          error
+        })
     })
-  })
   
 });
-

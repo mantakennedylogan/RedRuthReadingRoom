@@ -12,6 +12,7 @@ import PersonAdd from '@mui/icons-material/PersonAdd';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import { useNavigate } from 'react-router-dom';
+import NavbarButton from './NavbarButton';
 
 export default function AccountMenu() {
   const [anchorEl, setAnchorEl] = React.useState(null);
@@ -35,13 +36,10 @@ export default function AccountMenu() {
     navigate("/settings");
   };
 
-  
-
   return (
     <React.Fragment>
-      <Box sx={{ display: 'flex', alignItems: 'center', textAlign: 'center' }}>
-        <Typography sx={{ minWidth: 100 }}>Contact</Typography>
-        <Typography sx={{ minWidth: 100 }}>Profile</Typography>
+      <Box >
+        <NavbarButton link="/admin" name="Research" />
         <Tooltip title="Account settings">
           <IconButton
             onClick={handleClick}
@@ -51,7 +49,7 @@ export default function AccountMenu() {
             aria-haspopup="true"
             aria-expanded={open ? 'true' : undefined}
           >
-            <Avatar sx={{ width: 32, height: 32 }}>M</Avatar>
+            <Avatar sx={{ width: 25, height: 25 }}>M</Avatar>
           </IconButton>
         </Tooltip>
       </Box>
