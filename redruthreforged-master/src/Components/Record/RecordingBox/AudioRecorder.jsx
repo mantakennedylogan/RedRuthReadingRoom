@@ -1,4 +1,4 @@
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect} from "react";
 /*import AWS from 'aws-sdk'
 import ReactS3 from 'react-s3';
 
@@ -124,10 +124,11 @@ const AudioRecorder = () => {
 		.catch(err => console.error(err))	
 	}
 	*/
+	//Upload audio file to the server (ORIGINAL)
 	function uploadFile(john){
 
 		try{
-			axios.post('/api/upload',{'audio':john}).then((response)=>{
+			axios.post('/api/upload', {'audio':john}).then((response)=>{
 				console.log(response);
 			});
 		}
@@ -135,6 +136,41 @@ const AudioRecorder = () => {
 			console.log("Axios fail :(");
 		}
 	}
+	//TESTING
+	// function uploadFile(thisAudio){
+	// 	try{
+	// 		const formData = new FormData();
+	// 		formData.append("audioFile", thisAudio);
+
+	// 		axios.post("/api/upload", formData).then((response) => {
+	// 			console.log(response.status, response.data.token);
+	// 		});
+	// 	}
+	// 	catch (e) {
+	// 		console.log("upload fail!");
+	// 	}	
+	// }
+
+	// useEffect((result) => {
+	// 	var inputElement = document.createElement('input');
+	// 	inputElement.type = "button"
+	// 	inputElement.name = "button"
+		
+	// 	inputElement.addEventListener('click', function(){
+	// 		uploadFile(result.name);
+	// 	});
+	// 	//document.body.appendChild(inputElement);
+	// });
+
+	// invoke = (event) => {
+	// 	let nameOfFunction = this[event.target.name];
+	// 	let arg1 = event.target.getAttribute('data-arg1');
+	// 	// We can add more arguments as needed...
+	// 	window[nameOfFunction](arg1)
+	// 	// Hope the function is in the window.
+	// 	// Else the respective object need to be used
+	// 	}
+	//   };
 
 	return (
 		<>		
