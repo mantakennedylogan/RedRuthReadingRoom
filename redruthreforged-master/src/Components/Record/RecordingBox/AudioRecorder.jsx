@@ -58,6 +58,7 @@ const AudioRecorder = () => {
 	const stopRecording = () => {
 		setRecordingStatus("inactive");
 		mediaRecorder.current.stop();
+		
 
 		mediaRecorder.current.onstop = () => {
 			const audioBlob = new Blob(audioChunks, { type: mimeType });
@@ -67,6 +68,7 @@ const AudioRecorder = () => {
 
 			setAudioChunks([]);
 		};
+		//mediaRecorder.ondataavailable
 	};
 
 	// Function to upload file to s3
@@ -128,31 +130,37 @@ const AudioRecorder = () => {
 	}
 	*/
 	//Upload audio file to the server (ORIGINAL)
-	function uploadFile(john){
+	// function uploadFile(john){
 
-		try{
-			axios.post('/api/upload', {'audio':john}).then((response)=>{
-				console.log(response);
-			});
-		}
-		catch (e) {
-			console.log("Axios fail :(");
-		}
-	}
-	//TESTING
-	// function uploadFile(thisAudio){
 	// 	try{
-	// 		const formData = new FormData();
-	// 		formData.append("audioFile", thisAudio);
-
-	// 		axios.post("/api/upload", formData).then((response) => {
-	// 			console.log(response.status, response.data.token);
+	// 		axios.post('/api/upload', {'audio':john}).then((response)=>{
+	// 			console.log(response);
 	// 		});
 	// 	}
 	// 	catch (e) {
-	// 		console.log("upload fail!");
-	// 	}	
+	// 		console.log("Axios fail :(");
+	// 	}
 	// }
+
+
+	//TESTING
+
+	const uploadFile = (thisAudio) => {
+		try{
+			let formData = new FormData();
+			formData.append("audioFile", thisAudio, "recording.wav");
+			const config = {
+				headers: {'content-type': 'multipart/form-data'}
+			}
+			axios.post("/api/upload", formData, config);
+			// axios.post("/api/upload", formData).then((response) => {
+			// 	console.log(response.status, response.data.token);
+			// });
+		}
+		catch (e) {
+			console.log("upload fail!");
+		}	
+	}
 
 	// useEffect((result) => {
 	// 	var inputElement = document.createElement('input');
@@ -199,7 +207,7 @@ const AudioRecorder = () => {
 							Download Recording
 						</a>
 						<br></br>
-        				<button onClick={uploadFile(audio)} style={{marginTop: '3rem', background:'#323f54', color: '#faf9f6', fontSize: 20, borderRadius: 5, padding: 10, paddingLeft:20, paddingRight:20 }}>SUBMIT</button>
+        				<button onClick={uploadFile/*(audio)*/} style={{marginTop: '3rem', background:'#323f54', color: '#faf9f6', fontSize: 20, borderRadius: 5, padding: 10, paddingLeft:20, paddingRight:20 }}>SUBMIT</button>
 					</div>
 				) : null}
 			</main>
