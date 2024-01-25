@@ -244,3 +244,5 @@ server.post('/api/upload', async (req, res) => {
     })
   
 });
+
+module.exports = server;
