@@ -44,6 +44,10 @@ server.listen(port,'0.0.0.0', () => {
     
 });
 
+server.get('/', (req, res) => {
+    res.send('Hey this is my API running 🥳')
+})
+
 // Type: Record :: DB Query
 // Overview: Called by Record page to get prompt information after specifying a prompt_id in the URL
 // Accepts: prompt_id
