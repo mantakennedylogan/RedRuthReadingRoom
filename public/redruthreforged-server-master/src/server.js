@@ -47,7 +47,7 @@ server.use(cors());
 
 server.listen(PORTTest, (error) =>{
     if(!error)
-        console.log("Server is Successfully Running, and App is listening on port "+ PORT)
+        console.log("Server is Successfully Running, and App is listening on port "+ PORTTest)
     else 
         console.log("Error occurred, server can't start", error);
     }
