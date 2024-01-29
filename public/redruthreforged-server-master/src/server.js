@@ -45,13 +45,17 @@ server.use(cors());
     
 // });
 
-server.listen(PORTTest, (error) =>{
-    if(!error)
-        console.log("Server is Successfully Running, and App is listening on port "+ PORTTest)
-    else 
-        console.log("Error occurred, server can't start", error);
-    }
-);
+server.listen(process.env.PORT, '0.0.0.0', function(err) {
+    console.log("App listening");
+});
+
+// server.listen(PORTTest, (error) =>{
+//     if(!error)
+//         console.log("Server is Successfully Running, and App is listening on port "+ PORTTest)
+//     else 
+//         console.log("Error occurred, server can't start", error);
+//     }
+// );
 
 server.get('/', (req, res) => {
     res.send('Hey this is my API running 🥳')
