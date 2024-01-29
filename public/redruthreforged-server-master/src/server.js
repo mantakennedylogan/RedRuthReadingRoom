@@ -40,14 +40,13 @@ connection.on('error', function(err) {
 server.use(cors());
 
 // Listen for incoming calls
-// server.listen(port,'0.0.0.0', () => {
-//     console.log(`App listening at http://localhost:${port}`);
-    
-// });
-
-server.listen(process.env.PORT, '0.0.0.0', function(err) {
-    console.log("App listening");
+server.listen(port,'0.0.0.0', () => {
+    console.log(`App listening at http://localhost:${port}`); 
 });
+
+// server.listen(process.env.APP_PORT, '0.0.0.0', function(err) {
+//     console.log("App listening on: http://localhost:${process.env.APP_PORT}");
+// });
 
 // server.listen(PORTTest, (error) =>{
 //     if(!error)
