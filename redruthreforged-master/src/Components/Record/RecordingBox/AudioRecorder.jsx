@@ -9,6 +9,7 @@ import disabledMic from "../../../images/disabledMic.png";
 import neutralMic from "../../../images/neutralMic.png";
 import recordingMic from "../../../images/recordingMic.png";
 import axios from '../../../API/axios';
+import React from 'react';
 const mimeType = "audio/webm";
 
 const AudioRecorder = () => {
@@ -68,7 +69,7 @@ const AudioRecorder = () => {
 
 			setAudioChunks([]);
 		};
-		//mediaRecorder.ondataavailable
+		
 	};
 
 	// Function to upload file to s3
@@ -130,37 +131,39 @@ const AudioRecorder = () => {
 	}
 	*/
 	//Upload audio file to the server (ORIGINAL)
-	// function uploadFile(john){
+	function uploadFile(/*john*/){
 
-	// 	try{
-	// 		axios.post('/api/upload', {'audio':john}).then((response)=>{
-	// 			console.log(response);
-	// 		});
-	// 	}
-	// 	catch (e) {
-	// 		console.log("Axios fail :(");
-	// 	}
-	// }
+		try{
+			axios.post('/api/upload', {'audio':audio}).then((response)=>{
+				console.log(response);
+			});
+			console.log("sent file");
+		}
+		catch (e) {
+			console.log("Axios fail :(");
+		}
+		console.log("end of upload file");
+	}
 
 
 	//TESTING
 
-	const uploadFile = (thisAudio) => {
-		try{
-			let formData = new FormData();
-			formData.append("audioFile", thisAudio, "recording.wav");
-			const config = {
-				headers: {'content-type': 'multipart/form-data'}
-			}
-			axios.post("/api/upload", formData, config);
-			// axios.post("/api/upload", formData).then((response) => {
-			// 	console.log(response.status, response.data.token);
-			// });
-		}
-		catch (e) {
-			console.log("upload fail!");
-		}	
-	}
+	// const uploadFile = (thisAudio) => {
+	// 	try{
+	// 		let formData = new FormData();
+	// 		formData.append("audioFile", thisAudio, "recording.wav");
+	// 		const config = {
+	// 			headers: {'content-type': 'multipart/form-data'}
+	// 		}
+	// 		axios.post("/api/upload", formData, config);
+	// 		// axios.post("/api/upload", formData).then((response) => {
+	// 		// 	console.log(response.status, response.data.token);
+	// 		// });
+	// 	}
+	// 	catch (e) {
+	// 		console.log("upload fail!");
+	// 	}	
+	// }
 
 	// useEffect((result) => {
 	// 	var inputElement = document.createElement('input');
