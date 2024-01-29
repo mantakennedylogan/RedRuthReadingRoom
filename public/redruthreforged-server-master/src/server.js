@@ -10,6 +10,7 @@ const fs = require('fs');
 // Set up express server
 const server = express();
 const port = process.env.APP_PORT || 8000;
+const PORTTest = 8000;
 server.use(express.json());
 
 // Create connection to mySQL db using variables in .env.
@@ -39,10 +40,18 @@ connection.on('error', function(err) {
 server.use(cors());
 
 // Listen for incoming calls
-server.listen(port,'0.0.0.0', () => {
-    console.log(`App listening at http://localhost:${port}`);
+// server.listen(port,'0.0.0.0', () => {
+//     console.log(`App listening at http://localhost:${port}`);
     
-});
+// });
+
+server.listen(PORTTest, (error) =>{
+    if(!error)
+        console.log("Server is Successfully Running, and App is listening on port "+ PORT)
+    else 
+        console.log("Error occurred, server can't start", error);
+    }
+);
 
 server.get('/', (req, res) => {
     res.send('Hey this is my API running 🥳')
