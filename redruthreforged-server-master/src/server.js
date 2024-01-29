@@ -218,17 +218,18 @@ server.get('/api/uploadFile', (req, res) => {
 
 
 server.post('/api/upload', async (req, res) => {
-    // var myFile = new File(req.body.audio, 'image.jpeg', {
-    //     type: myBlob.type,
-    // }); 
-    const audioFile = req.body.audio;
+    var myFile = new File(req.body.audio, 'image.jpeg', {
+        type: myBlob.type,
+    }); 
+    console.log("made it to server");
+    // const audioFile = req.body.audio;
 
     connection.query('SELECT taf.file_id, tp.prompt, taf.name, taf.email, taf.phone_num, taf.postal_code, taf.title, taf.remarks, taf.timestamp, taf.file_length FROM t_audio_file as taf JOIN t_prompt tp ON tp.prompt_id = taf.prompt_id LEFT JOIN t_audio_file_metadata as tafm ON taf.file_id = tafm.file_id WHERE taf.file_id = ?', [file_id], function (error, results, fields) {
         if (error) throw error;
-        res.json(results);
+        res.json(results);////////!!!!!!!!!!HERE
     });
-    //var file = new fs.readFileSync(req.body.audio, 'utf8');
-    console.log(req) 
+    // //var file = new fs.readFileSync(req.body.audio, 'utf8');
+    //console.log(req) 
     await fileparser(req)
       .then(data => {
         res.status(200).json({
