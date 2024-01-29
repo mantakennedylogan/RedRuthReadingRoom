@@ -44,20 +44,8 @@ server.listen(port,'0.0.0.0', () => {
     console.log(`App listening at http://localhost:${port}`); 
 });
 
-// server.listen(process.env.APP_PORT, '0.0.0.0', function(err) {
-//     console.log("App listening on: http://localhost:${process.env.APP_PORT}");
-// });
-
-// server.listen(PORTTest, (error) =>{
-//     if(!error)
-//         console.log("Server is Successfully Running, and App is listening on port "+ PORTTest)
-//     else 
-//         console.log("Error occurred, server can't start", error);
-//     }
-// );
-
 server.get('/', (req, res) => {
-    res.send('Hey this is my API running 🥳')
+    res.send('The redruth reading room API is currently up and running🥳')
 })
 
 // Type: Record :: DB Query
