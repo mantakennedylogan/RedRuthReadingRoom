@@ -2,6 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
 const fs = require('fs');
+const AWS = require('aws-sdk');
 
 
 // TODO: Secure API w/ authorization... JWT tokens or something
@@ -205,48 +206,46 @@ require('dotenv').config();
 
 server.set('json spaces', 5); // to pretify json response
 
-const fileparser = require('./fileparser');
-/*
-server.get('/api/uploadFile', (req, res) => {
-  res.send(`
-    <h2>File Upload With <code>"Node.js"</code></h2>
-    <form action="/api/upload" enctype="multipart/form-data" method="post">
-      <div>Select a file: 
-        <input name="file" type="file" />
-      </div>
-      <input type="submit" value="Upload" />
-    </form>
-
-  `);
-});*/
 
 
-server.post('/api/upload', async (req, res) => {
-    // var myFile = new File(req.body.audio, 'image.jpeg', {
-    //     type: myBlob.type,
-    // }); 
-    const audioFile = req.body.audio;
+// Multer Configuration
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+const upload = multer({ storage: storage });
 
-    connection.query('SELECT taf.file_id, tp.prompt, taf.name, taf.email, taf.phone_num, taf.postal_code, taf.title, taf.remarks, taf.timestamp, taf.file_length FROM t_audio_file as taf JOIN t_prompt tp ON tp.prompt_id = taf.prompt_id LEFT JOIN t_audio_file_metadata as tafm ON taf.file_id = tafm.file_id WHERE taf.file_id = ?', [file_id], function (error, results, fields) {
-        if (error) throw error;
-        res.json(results);
+// Overview: Sends a submitted recording from the record page to the AWS S3 bucket
+server.post('/api/upload/', upload.single('audio'), (req, res) => {
+    const audioPath = req.file.path; 
+    const fileContent = fs.readFileSync(audioPath);
+    const name = Date.now().toString() + '.m4a';
+
+    const accessKeyId = 'AKIA2WTBG4K3GELKESGS';
+      const secretAccessKey = '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';
+      const region = 'us-west-2';
+      const Bucket = 'redruth-bucket';
+      console.log(region);
+      AWS.config.update({ // Credentials are OK
+        accessKeyId: accessKeyId,
+        secretAccessKey: secretAccessKey,
+        region: region
     });
-    //var file = new fs.readFileSync(req.body.audio, 'utf8');
-    console.log(req) 
-    await fileparser(req)
-      .then(data => {
-        res.status(200).json({
-          message: "Success",
-          data
-        })
-    })
-    .catch(error => {
-        res.status(400).json({
-          message: "An error occurred.",
-          error
-        })
-    })
-  
+
+    const s3 = new AWS.S3();
+      s3.putObject({
+        Bucket: Bucket,
+        Key: name,
+        Body: fileContent,
+        ACL: 'public-read'
+      },function (res) {
+        console.log('S3 put object response: ' + res); 
+    });
 });
 
 module.exports = server;
