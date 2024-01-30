@@ -19,6 +19,7 @@ const AudioRecorder = () => {
 	const [stream, setStream] = useState(null);
 	const [audio, setAudio] = useState(null);
 	const [audioChunks, setAudioChunks] = useState([]);
+	const [dataUrl, setDataUrl] = useState(null);
 
 	const getMicrophonePermission = async () => {
 		if ("MediaRecorder" in window) {
@@ -63,7 +64,18 @@ const AudioRecorder = () => {
 
 		mediaRecorder.current.onstop = () => {
 			const audioBlob = new Blob(audioChunks, { type: mimeType });
-			const audioUrl = URL.createObjectURL(audioBlob);
+			const audioUrl = window.URL.createObjectURL(audioBlob);
+			//let dataUrl = '';
+			previewFile(audioBlob);
+			function previewFile(file) {
+				var reader  = new FileReader();
+				reader.onloadend = function () {
+					console.log("converting to norm url");
+					console.log(reader.result);
+					setDataUrl(reader.result);
+				}
+				reader.readAsDataURL(file);
+			}
 
 			setAudio(audioUrl);
 
@@ -134,7 +146,7 @@ const AudioRecorder = () => {
 	function uploadFile(/*john*/){
 
 		try{
-			axios.post('/api/upload', {'audio':audio}).then((response)=>{
+			axios.post('/api/upload', {'audio':dataUrl/*audio*/}).then((response)=>{
 				console.log(response);
 			});
 			console.log("sent file");

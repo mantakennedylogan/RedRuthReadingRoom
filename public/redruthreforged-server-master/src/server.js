@@ -225,18 +225,19 @@ server.get('/api/uploadFile', (req, res) => {
 server.post('/api/upload/', async (req, res) => {
 
     console.log(req.body.audio);
-    const fileContent = fs.readFileSync('Recording.m4a');
+    const fileContent = fs.readFileSync(req.body.audio/*'Recording.m4a'*/);
     const name = Date.now().toString() + '.m4a';
     const accessKeyId = 'AKIA2WTBG4K3GELKESGS';
-      const secretAccessKey = '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';
-      const region = 'us-west-2';
-      const Bucket = 'redruth-bucket';
-      console.log(region);
-      AWS.config.update({ // Credentials are OK
+    const secretAccessKey = 'LQNAcBUrON8jOshkRoYrAROnkhWbQgX4zuoSgL2Y';
+    const region = 'us-west-2';
+    const Bucket = 'redruth-bucket';
+    console.log(region);
+    AWS.config.update({ // Credentials are OK
         accessKeyId: accessKeyId,
         secretAccessKey: secretAccessKey,
         region: region
     });
+
     
     const s3 = new AWS.S3();
       //var data = new Blob();
@@ -249,6 +250,11 @@ server.post('/api/upload/', async (req, res) => {
         console.log('Successfully uploaded file.');
         console.log(res); 
     });
+
+    
+
+    //console.log("on server!");
+
     })
 
 module.exports = server;
