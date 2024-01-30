@@ -10,6 +10,7 @@ const fs = require('fs');
 // Set up express server
 const server = express();
 const port = process.env.APP_PORT || 8000;
+const PORTTest = 8000;
 server.use(express.json());
 
 // Create connection to mySQL db using variables in .env.
@@ -40,9 +41,12 @@ server.use(cors());
 
 // Listen for incoming calls
 server.listen(port,'0.0.0.0', () => {
-    console.log(`App listening at http://localhost:${port}`);
-    
+    console.log(`App listening at http://localhost:${port}`); 
 });
+
+server.get('/', (req, res) => {
+    res.send('The redruth reading room API is currently up and running🥳')
+})
 
 // Type: Record :: DB Query
 // Overview: Called by Record page to get prompt information after specifying a prompt_id in the URL
@@ -245,3 +249,5 @@ server.post('/api/upload', async (req, res) => {
     })
   
 });
+
+module.exports = server;

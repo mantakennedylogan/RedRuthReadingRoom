@@ -64,7 +64,7 @@ handles database reads/writes
   - Run mvn test
   
   
-  <strong>Note</strong>: This will not build to do the fact that there is no classes defined currently.
+  <strong>Note</strong>: This will not build due to the fact that there is no classes defined currently.
   <br></br>
 * To test Unit Tests
 
