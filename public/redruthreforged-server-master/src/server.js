@@ -2,6 +2,7 @@ const express = require('express');
 const mysql = require('mysql');
 const cors = require('cors');
 const fs = require('fs');
+const AWS = require('aws-sdk');
 
 
 // TODO: Secure API w/ authorization... JWT tokens or something
@@ -221,32 +222,61 @@ server.get('/api/uploadFile', (req, res) => {
 });*/
 
 
-server.post('/api/upload', async (req, res) => {
-    // var myFile = new File(req.body.audio, 'image.jpeg', {
-    //     type: myBlob.type,
-    // }); 
-    const audioFile = req.body.audio;
+// server.post('/api/upload', async (req, res) => {
+//     // var myFile = new File(req.body.audio, 'image.jpeg', {
+//     //     type: myBlob.type,
+//     // }); 
+//     const audioFile = req.body.audio;
 
-    connection.query('SELECT taf.file_id, tp.prompt, taf.name, taf.email, taf.phone_num, taf.postal_code, taf.title, taf.remarks, taf.timestamp, taf.file_length FROM t_audio_file as taf JOIN t_prompt tp ON tp.prompt_id = taf.prompt_id LEFT JOIN t_audio_file_metadata as tafm ON taf.file_id = tafm.file_id WHERE taf.file_id = ?', [file_id], function (error, results, fields) {
-        if (error) throw error;
-        res.json(results);
-    });
-    //var file = new fs.readFileSync(req.body.audio, 'utf8');
-    console.log(req) 
-    await fileparser(req)
-      .then(data => {
-        res.status(200).json({
-          message: "Success",
-          data
-        })
-    })
-    .catch(error => {
-        res.status(400).json({
-          message: "An error occurred.",
-          error
-        })
-    })
+//     connection.query('SELECT taf.file_id, tp.prompt, taf.name, taf.email, taf.phone_num, taf.postal_code, taf.title, taf.remarks, taf.timestamp, taf.file_length FROM t_audio_file as taf JOIN t_prompt tp ON tp.prompt_id = taf.prompt_id LEFT JOIN t_audio_file_metadata as tafm ON taf.file_id = tafm.file_id WHERE taf.file_id = ?', [file_id], function (error, results, fields) {
+//         if (error) throw error;
+//         res.json(results);
+//     });
+//     //var file = new fs.readFileSync(req.body.audio, 'utf8');
+//     console.log(req) 
+//     await fileparser(req)
+//       .then(data => {
+//         res.status(200).json({
+//           message: "Success",
+//           data
+//         })
+//     })
+//     .catch(error => {
+//         res.status(400).json({
+//           message: "An error occurred.",
+//           error
+//         })
+//     })
   
+// });
+
+server.post('/api/upload/', async (req, res) => {
+
+    console.log(req.body.audio);
+    const fileContent = fs.readFileSync('Recording.m4a');
+    const name = Date.now().toString() + '.m4a';
+    const accessKeyId = 'AKIA2WTBG4K3GELKESGS';
+      const secretAccessKey = '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';
+      const region = 'us-west-2';
+      const Bucket = 'redruth-bucket';
+      console.log(region);
+      AWS.config.update({ // Credentials are OK
+        accessKeyId: accessKeyId,
+        secretAccessKey: secretAccessKey,
+        region: region
+    });
+
+    const s3 = new AWS.S3();
+      //var data = new Blob();
+      s3.putObject({
+        Bucket: Bucket,
+        Key: name,
+        Body: fileContent,
+        ACL: 'public-read'
+      },function (res) {
+        console.log('Successfully uploaded file.');
+        console.log(res); 
+    });
 });
 
 module.exports = server;
