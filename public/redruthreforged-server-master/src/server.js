@@ -201,26 +201,25 @@ server.get('/api/admin/update/collectionpubliclistenflg', (req, res) => {
 //         });
 // })]
 
+// Type: ADMIN :: DB Create
+// Overview: Called by upload
+// Accepts: file_id, user_id, prompt_id
+// Returns:
 
-require('dotenv').config();
+function uploadAudioToDatabase(file_id, user_id, prompt_id){
+    prompt_id = 666; // FOR NOW HARD CODED
+    user_id = 12345; // FOR NOW HARD CODED
+    connection.query("INSERT INTO t_audio_file (file_id, user_id, prompt_id) VALUES (?, ?, ?)", [file_id, user_id, prompt_id]);
+}
 
-server.set('json spaces', 5); // to pretify json response
+require('dotenv').config(); // may not be nessacary will remove if can prove that
 
-const fileparser = require('./fileparser');
-/*
-server.get('/api/uploadFile', (req, res) => {
-  res.send(`
-    <h2>File Upload With <code>"Node.js"</code></h2>
-    <form action="/api/upload" enctype="multipart/form-data" method="post">
-      <div>Select a file: 
-        <input name="file" type="file" />
-      </div>
-      <input type="submit" value="Upload" />
-    </form>
+server.set('json spaces', 5); // to pretify json response may not be needed will remove if can prove that
 
-  `);
-});*/
-
+// Type: ADMIN :: DB Create
+// Overview: called by record box will send req audio to S3 bucket
+// Accepts: WILL ACCEPT AUDIO
+// Returns:
 
 server.post('/api/upload/', async (req, res) => {
 
@@ -237,6 +236,7 @@ server.post('/api/upload/', async (req, res) => {
         secretAccessKey: secretAccessKey,
         region: region
     });
+
     
     const s3 = new AWS.S3();
       //var data = new Blob();
@@ -249,6 +249,7 @@ server.post('/api/upload/', async (req, res) => {
         console.log('Successfully uploaded file.');
         console.log(res); 
     });
+    uploadAudioToDatabase(name, '12345', '666');
     })
 
 module.exports = server;
