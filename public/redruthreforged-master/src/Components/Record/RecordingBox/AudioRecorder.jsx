@@ -18,9 +18,12 @@ const AudioRecorder = () => {
 	const [stream, setStream] = useState(null);
 	const [audio, setAudio] = useState(null);
 	const [audioChunks, setAudioChunks] = useState([]);
+	const [audioMime, setAudioMime] = useState(null);
+	
 	//form related
 	const [userName, setName] = useState("");
 
+	
 	const getMicrophonePermission = async () => {
 		if ("MediaRecorder" in window) {
 			try {
@@ -62,11 +65,16 @@ const AudioRecorder = () => {
 		mediaRecorder.current.stop();
 
 		mediaRecorder.current.onstop = () => {
+			// save audio to url so it can be played back before submission
+			const audioMime = new Blob(audioChunks, { type: 'mimeType' });
+			const audioUrl = URL.createObjectURL(audioMime);
+			setAudioMime(audioUrl);
+			
+			// save audio in correct wav format or s3 bucket upload
 			const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
 			//const audioUrl = URL.createObjectURL(audioBlob);
 
 			setAudio(audioBlob);
-
 			setAudioChunks([]);
 		};
 	};
@@ -116,9 +124,9 @@ const AudioRecorder = () => {
 				</div>
 				{audio ? (
 					<div className="audio-player" style={{textAlign: 'center', marginTop: '3rem' }}>
-						<audio src={audio} controls></audio>
+						<audio src={audioMime} controls></audio>
 						<br></br>
-						<a download href={audio} style={{color: '#323f54', textDecoration: 'none', fontSize: 12}}>
+						<a download href={audioMime} style={{color: '#323f54', textDecoration: 'none', fontSize: 12}}>
 							Download Recording
 						</a>
 						<br></br>
