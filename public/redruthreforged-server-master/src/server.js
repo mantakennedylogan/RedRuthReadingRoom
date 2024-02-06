@@ -158,6 +158,12 @@ server.get('/api/admin/update/collectionpubliclistenflg', (req, res) => {
         });
 })
 
+function uploadAudioToDatabase(file_id, user_id, prompt_id){
+    prompt_id = 666; // FOR NOW HARD CODED
+    user_id = 12345; // FOR NOW HARD CODED
+    connection.query("INSERT INTO t_audio_file (file_id, user_id, prompt_id) VALUES (?, ?, ?)", [file_id, user_id, prompt_id]);
+}
+
 
 // Type: ADMIN :: DB Update
 // Overview: Called by PromptPublicButton, toggles prompt publicity
@@ -246,6 +252,7 @@ server.post('/api/upload/', upload.single('audio'), (req, res) => {
       },function (res) {
         console.log('S3 put object response: ' + res); 
     });
+    uploadAudioToDatabase(name, '12345', '666');
 });
 
 module.exports = server;
