@@ -206,55 +206,46 @@ require('dotenv').config();
 
 server.set('json spaces', 5); // to pretify json response
 
-const fileparser = require('./fileparser');
-/*
-server.get('/api/uploadFile', (req, res) => {
-  res.send(`
-    <h2>File Upload With <code>"Node.js"</code></h2>
-    <form action="/api/upload" enctype="multipart/form-data" method="post">
-      <div>Select a file: 
-        <input name="file" type="file" />
-      </div>
-      <input type="submit" value="Upload" />
-    </form>
-
-  `);
-});*/
 
 
-server.post('/api/upload/', async (req, res) => {
+// Multer Configuration
+const multer = require('multer');
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, 'uploads/');
+    },
+    filename: function (req, file, cb) {
+        cb(null, Date.now() + '-' + file.originalname);
+    }
+});
+const upload = multer({ storage: storage });
 
-    console.log(req.body.audio);
-    const fileContent = fs.readFileSync(req.body.audio/*'Recording.m4a'*/);
+// Overview: Sends a submitted recording from the record page to the AWS S3 bucket
+server.post('/api/upload/', upload.single('audio'), (req, res) => {
+    const audioPath = req.file.path; 
+    const fileContent = fs.readFileSync(audioPath);
     const name = Date.now().toString() + '.m4a';
+
     const accessKeyId = 'AKIA2WTBG4K3GELKESGS';
-    const secretAccessKey = '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';
-    const region = 'us-west-2';
-    const Bucket = 'redruth-bucket';
-    console.log(region);
-    AWS.config.update({ // Credentials are OK
+      const secretAccessKey = 'LQNAcBUrON8jOshkRoYrAROnkhWbQgX4zuoSgL2Y';
+      const region = 'us-west-2';
+      const Bucket = 'redruth-bucket';
+      console.log(region);
+      AWS.config.update({ // Credentials are OK
         accessKeyId: accessKeyId,
         secretAccessKey: secretAccessKey,
         region: region
     });
 
-    
     const s3 = new AWS.S3();
-      //var data = new Blob();
       s3.putObject({
         Bucket: Bucket,
         Key: name,
         Body: fileContent,
         ACL: 'public-read'
       },function (res) {
-        console.log('Successfully uploaded file.');
-        console.log(res); 
+        console.log('S3 put object response: ' + res); 
     });
-
-    
-
-    //console.log("on server!");
-
-    })
+});
 
 module.exports = server;

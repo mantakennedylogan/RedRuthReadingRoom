@@ -9,7 +9,6 @@ import disabledMic from "../../../images/disabledMic.png";
 import neutralMic from "../../../images/neutralMic.png";
 import recordingMic from "../../../images/recordingMic.png";
 import axios from '../../../API/axios';
-import React from 'react';
 const mimeType = "audio/webm";
 
 const AudioRecorder = () => {
@@ -19,7 +18,6 @@ const AudioRecorder = () => {
 	const [stream, setStream] = useState(null);
 	const [audio, setAudio] = useState(null);
 	const [audioChunks, setAudioChunks] = useState([]);
-	const [dataUrl, setDataUrl] = useState(null);
 
 	const getMicrophonePermission = async () => {
 		if ("MediaRecorder" in window) {
@@ -40,7 +38,7 @@ const AudioRecorder = () => {
 
 	const startRecording = async () => {
 		setRecordingStatus("recording");
-		const media = new MediaRecorder(stream, { type: mimeType });
+		const media = new MediaRecorder(stream, { type: 'audio/wav' });
 
 		mediaRecorder.current = media;
 
@@ -60,143 +58,36 @@ const AudioRecorder = () => {
 	const stopRecording = () => {
 		setRecordingStatus("inactive");
 		mediaRecorder.current.stop();
-		
 
 		mediaRecorder.current.onstop = () => {
-			const audioBlob = new Blob(audioChunks, { type: mimeType });
-			const audioUrl = window.URL.createObjectURL(audioBlob);
-			//let dataUrl = '';
-			previewFile(audioBlob);
-			function previewFile(file) {
-				var reader  = new FileReader();
-				reader.onloadend = function () {
-					console.log("converting to norm url");
-					console.log(reader.result);
-					setDataUrl(reader.result);
-				}
-				reader.readAsDataURL(file);
-			}
+			const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+			const audioUrl = URL.createObjectURL(audioBlob);
 
-			setAudio(audioUrl);
+			setAudio(audioBlob);
 
 			setAudioChunks([]);
 		};
-		
 	};
 
-	// Function to upload file to s3
-	// const uploadFile = async () => {
-	// 	// S3 Bucket Name
-	// 	const S3_BUCKET = "redruth-bucket";
+
+	const uploadAudio = async () => {
+		try {
+		  const formData = new FormData();
+		  formData.append('audio', audio, 'submission.wav');
+
+		  console.log(audio);
 	
-	// 	// S3 Region
-	// 	const REGION = "us-west-2";
+		  const response = await axios.post('/api/upload', formData, {
+			headers: {
+			  'Content-Type': 'multipart/form-data'
+			}
+		  });
 	
-	// 	// S3 Credentials
-	// 	AWS.config.update({
-	// 	  accessKeyId: "AKIA2WTBG4K3GELKESGS",
-	// 	  secretAccessKey: "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",
-	// 	});
-	// 	const s3 = new AWS.S3({
-	// 	  params: { Bucket: S3_BUCKET },
-	// 	  region: REGION,
-	// 	});
-
-	// 	// Files Parameters
-
-	// 	const params = {
-	// 		Bucket: S3_BUCKET,
-	// 		Key: "Se7en audio name",
-	// 		Body: audio,
-	// 	  };
-	  
-	// 	  // Uploading file to s3
-	  
-	// 	  var upload = s3
-	// 		.putObject(params)
-	// 		.on("httpUploadProgress", (evt) => {
-	// 		  // File uploading progress
-	// 		  console.log(
-	// 			"Uploading " + parseInt((evt.loaded * 100) / evt.total) + "%"
-	// 		  );
-	// 		})
-	// 		.promise();
-	  
-	// 	  await upload.then((err, data) => {
-	// 		console.log(err);
-	// 		// Fille successfully uploaded
-	// 		alert("audio uploaded successfully.");
-	// 	  });
-	// };
-
-	const config = {
-		bucketName: 'redruth-bucket',
-		region: 'us-west-2',
-		accessKeyId: 'AKIA2WTBG4K3GELKESGS',
-		secretAccessKey: 'LQNAcBUrON8jOshkRoYrAROnkhWbQgX4zuoSgL2Y+DEkgDxe6veFosBT7eUgEXAMPLE',
-	}
-/*
-	function uploadFile(audio) {
-		ReactS3.upload(audio, config)
-		.then(data => console.log(data))
-		.catch(err => console.error(err))	
-	}
-	*/
-	//Upload audio file to the server (ORIGINAL)
-	function uploadFile(/*john*/){
-
-		try{
-			axios.post('/api/upload', {'audio':dataUrl/*audio*/}).then((response)=>{
-				console.log(response);
-			});
-			console.log("sent file");
+		  console.log('File uploaded successfully:', response.data);
+		} catch (error) {
+		  console.error('Error uploading file:', error);
 		}
-		catch (e) {
-			console.log("Axios fail :(");
-		}
-		console.log("end of upload file");
-	}
-
-
-	//TESTING
-
-	// const uploadFile = (thisAudio) => {
-	// 	try{
-	// 		let formData = new FormData();
-	// 		formData.append("audioFile", thisAudio, "recording.wav");
-	// 		const config = {
-	// 			headers: {'content-type': 'multipart/form-data'}
-	// 		}
-	// 		axios.post("/api/upload", formData, config);
-	// 		// axios.post("/api/upload", formData).then((response) => {
-	// 		// 	console.log(response.status, response.data.token);
-	// 		// });
-	// 	}
-	// 	catch (e) {
-	// 		console.log("upload fail!");
-	// 	}	
-	// }
-
-	// useEffect((result) => {
-	// 	var inputElement = document.createElement('input');
-	// 	inputElement.type = "button"
-	// 	inputElement.name = "button"
-		
-	// 	inputElement.addEventListener('click', function(){
-	// 		uploadFile(result.name);
-	// 	});
-	// 	//document.body.appendChild(inputElement);
-	// });
-
-	// invoke = (event) => {
-	// 	let nameOfFunction = this[event.target.name];
-	// 	let arg1 = event.target.getAttribute('data-arg1');
-	// 	// We can add more arguments as needed...
-	// 	window[nameOfFunction](arg1)
-	// 	// Hope the function is in the window.
-	// 	// Else the respective object need to be used
-	// 	}
-	//   };
+	};
 
 	return (
 		<>		
@@ -222,7 +113,7 @@ const AudioRecorder = () => {
 							Download Recording
 						</a>
 						<br></br>
-        				<button onClick={uploadFile/*(audio)*/} style={{marginTop: '3rem', background:'#323f54', color: '#faf9f6', fontSize: 20, borderRadius: 5, padding: 10, paddingLeft:20, paddingRight:20 }}>SUBMIT</button>
+        				<button onClick={uploadAudio} style={{marginTop: '3rem', background:'#323f54', color: '#faf9f6', fontSize: 20, borderRadius: 5, padding: 10, paddingLeft:20, paddingRight:20 }}>SUBMIT</button>	
 					</div>
 				) : null}
 			</main>
