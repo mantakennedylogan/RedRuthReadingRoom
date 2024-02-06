@@ -74,7 +74,7 @@ const AudioRecorder = () => {
 		try {
 		  const formData = new FormData();
 		  formData.append('audio', audio, 'submission.wav');
-
+		  //
 		  console.log(audio);
 	
 		  const response = await axios.post('/api/upload', formData, {
@@ -82,6 +82,8 @@ const AudioRecorder = () => {
 			  'Content-Type': 'multipart/form-data'
 			}
 		  });
+
+		  //
 	
 		  console.log('File uploaded successfully:', response.data);
 		} catch (error) {
