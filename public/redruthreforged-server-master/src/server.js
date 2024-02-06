@@ -255,4 +255,42 @@ server.post('/api/upload/', upload.single('audio'), (req, res) => {
     uploadAudioToDatabase(name, '12345', '666');
 });
 
+// Send Audio form S3 to react
+
+server.get('/api/admin/getAudioFile', (req, res) =>{
+    let key = '1707180583513.m4a'
+    console.log("BIG TIME RUSH THING\n\n\n")
+
+    const accessKeyId = 'AKIA2WTBG4K3GELKESGS';
+      const secretAccessKey = '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';
+      const region = 'us-west-2';
+      const Bucket = 'redruth-bucket';
+      console.log(region);
+      AWS.config.update({ // Credentials are OK
+        accessKeyId: accessKeyId,
+        secretAccessKey: secretAccessKey,
+        region: region
+    });
+    const s3 = new AWS.S3();
+    
+    s3.getObject(
+        { Bucket: Bucket, Key: key },
+        function (error, data) {
+          if (error != null) {
+            console.log("Failed to retrieve an object: " + error);
+          } else {
+            console.log("Loaded " + data.ContentLength + " bytes");
+            // do something with data.Body
+            console.log(data.Body)
+            const textEncoder = new TextEncoder();
+            const uint8Array = textEncoder.encode(data.Body.toString());
+            console.log(uint8Array)
+
+            res.json(uint8Array)
+          }
+        })
+
+    
+})
+
 module.exports = server;
