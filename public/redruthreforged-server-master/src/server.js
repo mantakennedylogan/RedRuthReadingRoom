@@ -232,6 +232,9 @@ server.post('/api/upload/', upload.single('audio'), (req, res) => {
     const fileContent = fs.readFileSync(audioPath);
     const name = Date.now().toString() + '.m4a';
 
+    let userName = req.query.userName;
+    //console.log('Username: '+userName);
+
     const accessKeyId = 'AKIA2WTBG4K3GELKESGS';
       const secretAccessKey = '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';
       const region = 'us-west-2';

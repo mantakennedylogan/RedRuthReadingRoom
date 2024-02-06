@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect} from "react";
+import { useState, useRef, /*useEffect*/} from "react";
 /*import AWS from 'aws-sdk'
 import ReactS3 from 'react-s3';
 
@@ -9,7 +9,7 @@ import disabledMic from "../../../images/disabledMic.png";
 import neutralMic from "../../../images/neutralMic.png";
 import recordingMic from "../../../images/recordingMic.png";
 import axios from '../../../API/axios';
-const mimeType = "audio/webm";
+//const mimeType = "audio/webm";
 
 const AudioRecorder = () => {
 	const [permission, setPermission] = useState(false);
@@ -19,7 +19,7 @@ const AudioRecorder = () => {
 	const [audio, setAudio] = useState(null);
 	const [audioChunks, setAudioChunks] = useState([]);
 	//form related
-	const [name, setName] = useState("");
+	const [userName, setName] = useState("");
 
 	const getMicrophonePermission = async () => {
 		if ("MediaRecorder" in window) {
@@ -63,7 +63,7 @@ const AudioRecorder = () => {
 
 		mediaRecorder.current.onstop = () => {
 			const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
-			const audioUrl = URL.createObjectURL(audioBlob);
+			//const audioUrl = URL.createObjectURL(audioBlob);
 
 			setAudio(audioBlob);
 
@@ -76,17 +76,21 @@ const AudioRecorder = () => {
 		try {
 		  const formData = new FormData();
 		  formData.append('audio', audio, 'submission.wav');
-		  //
+		  //formData.append('userName', 'test name'/*userName*/);
+
 		  console.log(audio);
-		  console.log(name);
+		  //console.log(userName);
 	
 		  const response = await axios.post('/api/upload', formData, {
 			headers: {
 			  'Content-Type': 'multipart/form-data'
+			},
+			params:{
+				'userName': userName
+
 			}
 		  });
 
-		  //
 	
 		  console.log('File uploaded successfully:', response.data);
 		} catch (error) {
@@ -101,13 +105,13 @@ const AudioRecorder = () => {
 			<main>
 				<div className="audio-controls" style={{textAlign: 'center', marginTop: '5rem' }}>
 					{!permission ? (
-						<img  onClick={getMicrophonePermission} style={{height: 150, }} src={disabledMic}/>
+						<img  onClick={getMicrophonePermission} style={{height: 150, }} src={disabledMic} alt="record button, get permission"/>
 					) : null}
 					{permission && recordingStatus === "inactive" ? (
-						<img  onClick={startRecording} style={{height: 150, }} src={neutralMic}/>
+						<img  onClick={startRecording} style={{height: 150, }} src={neutralMic} alt="record button, inactive"/>
 					) : null}
 					{recordingStatus === "recording" ? (
-						<img  onClick={stopRecording} style={{height: 150, }} src={recordingMic}/>
+						<img  onClick={stopRecording} style={{height: 150, }} src={recordingMic} alt="record button, active"/>
 					) : null}
 				</div>
 				{audio ? (
@@ -120,13 +124,15 @@ const AudioRecorder = () => {
 						<br></br>
 
 						<form onSubmit={uploadAudio}> 
-							<label>Enter your name:
+							<label>Enter your full name:
 								<input 
 									type="text" 
-									value={name}
+									value={userName}
 									onChange={(e) => setName(e.target.value)}
 									/>
 							</label>
+							<br></br>
+							
 							<input type="submit" style={{marginTop: '3rem', background:'#323f54', color: '#faf9f6', fontSize: 20, borderRadius: 5, padding: 10, paddingLeft:20, paddingRight:20 }}/>
 						</form>
         					
