@@ -19,9 +19,10 @@ const AudioRecorder = () => {
 	const [audio, setAudio] = useState(null);
 	const [audioChunks, setAudioChunks] = useState([]);
 	const [audioMime, setAudioMime] = useState(null);
-	
+
 	//form related
 	const [userName, setName] = useState("");
+	let timer = null;
 
 	
 	const getMicrophonePermission = async () => {
@@ -43,6 +44,8 @@ const AudioRecorder = () => {
 
 	const startRecording = async () => {
 		setRecordingStatus("recording");
+		timer =  Date.now();
+
 		const media = new MediaRecorder(stream, { type: 'audio/wav' });
 
 		mediaRecorder.current = media;
@@ -63,6 +66,7 @@ const AudioRecorder = () => {
 	const stopRecording = () => {
 		setRecordingStatus("inactive");
 		mediaRecorder.current.stop();
+		timer =  timer - Date.now();
 
 		mediaRecorder.current.onstop = () => {
 			// save audio to url so it can be played back before submission
@@ -94,8 +98,11 @@ const AudioRecorder = () => {
 			  'Content-Type': 'multipart/form-data'
 			},
 			params:{
-				'userName': userName
-
+				'userName': userName,
+				'timer': timer ///HERE, doesnt work rn :(
+				//prompt id
+				//title
+				//time duration
 			}
 		  });
 
@@ -130,7 +137,7 @@ const AudioRecorder = () => {
 							Download Recording
 						</a>
 						<br></br>
-
+						<br></br>
 						<form onSubmit={uploadAudio}> 
 							<label>Enter your full name:
 								<input 
