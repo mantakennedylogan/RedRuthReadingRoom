@@ -18,6 +18,8 @@ const AudioRecorder = () => {
 	const [stream, setStream] = useState(null);
 	const [audio, setAudio] = useState(null);
 	const [audioChunks, setAudioChunks] = useState([]);
+	//form related
+	const [name, setName] = useState("");
 
 	const getMicrophonePermission = async () => {
 		if ("MediaRecorder" in window) {
@@ -76,6 +78,7 @@ const AudioRecorder = () => {
 		  formData.append('audio', audio, 'submission.wav');
 		  //
 		  console.log(audio);
+		  console.log(name);
 	
 		  const response = await axios.post('/api/upload', formData, {
 			headers: {
@@ -115,7 +118,18 @@ const AudioRecorder = () => {
 							Download Recording
 						</a>
 						<br></br>
-        				<button onClick={uploadAudio} style={{marginTop: '3rem', background:'#323f54', color: '#faf9f6', fontSize: 20, borderRadius: 5, padding: 10, paddingLeft:20, paddingRight:20 }}>SUBMIT</button>	
+
+						<form onSubmit={uploadAudio}> 
+							<label>Enter your name:
+								<input 
+									type="text" 
+									value={name}
+									onChange={(e) => setName(e.target.value)}
+									/>
+							</label>
+							<input type="submit" style={{marginTop: '3rem', background:'#323f54', color: '#faf9f6', fontSize: 20, borderRadius: 5, padding: 10, paddingLeft:20, paddingRight:20 }}/>
+						</form>
+        					
 					</div>
 				) : null}
 			</main>
@@ -123,5 +137,5 @@ const AudioRecorder = () => {
 		</>
 	);
 };
-
+//<button onClick={uploadAudio} style={{marginTop: '3rem', background:'#323f54', color: '#faf9f6', fontSize: 20, borderRadius: 5, padding: 10, paddingLeft:20, paddingRight:20 }}>SUBMIT</button>
 export default AudioRecorder;
