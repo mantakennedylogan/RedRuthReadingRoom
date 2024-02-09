@@ -60,8 +60,10 @@ server.get('/api/getprompt', (req, res) => {
         //if (error) throw error;
         if (error) {
             console.error('prompt_id is this: ' + prompt_id);
-
         }
+        console.log("res");
+        console.log(results[0]);
+        console.log('end of res');
         res.json(results[0]);
         });
     }
@@ -279,14 +281,9 @@ server.get('/api/admin/getAudioFile', (req, res) =>{
           if (error != null) {
             console.log("Failed to retrieve an object: " + error);
           } else {
-            console.log("Loaded " + data.ContentLength + " bytes");
-            // do something with data.Body
             console.log(data.Body)
-            const textEncoder = new TextEncoder();
-            const uint8Array = textEncoder.encode(data.Body.toString());
-            console.log(uint8Array)
-
-            res.json(uint8Array)
+            
+            res.json(data)
           }
         })
 
