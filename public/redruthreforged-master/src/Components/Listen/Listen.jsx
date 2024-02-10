@@ -1,4 +1,4 @@
-import React, {Text} from 'react'
+import React  from 'react'
 import { Box } from '@mui/material'
 import axios from '../../API/axios'
 import ListenBox from './ListenBox';
@@ -7,7 +7,8 @@ function Listen() {
   const [vis, setvis] = React.useState(false);
   const [audioURL, setAudioUrl] = React.useState(null)
   const [audioURLList, setAudioUrlList] = React.useState(null)
-
+  const [waitingText, setwaitingText] = React.useState("")
+console.log(waitingText)
   const getSingleAudio = async() => {
     const response = await axios.get('/api/admin/getAudioFile?file_id=' + '1707549335140'); //HARD CODED
     if(response.data === ''){
@@ -24,6 +25,7 @@ function Listen() {
   }
 
   const getMutupleAudio = async() => {
+    setwaitingText('Please wait while we get your data')
     const prompt_id = '666' // HARD CODED FOR NOW
     console.log("a")
     const response = await axios.get('/api/admin/getListOfFiles?prompt_id=' + prompt_id);
@@ -57,30 +59,35 @@ function Listen() {
     <>
       <button onClick={getSingleAudio}> GetRecording</button>
       {(vis == true ?(
-        <>
+        <li>
           <audio src={audioURL} type='audio/mpeg' controls></audio>
-        </>
+        </li>
       ):null)}
 
       <button onClick={getMutupleAudio}> GetMutuple</button>
       
-      
-      {(vis == true ?(
+      <div style={{paddingLeft: 30}}>
+      {vis == true &&
         
         audioURLList.map((individualAudio) =>{
           return(
+            <li>
             <ListenBox audio= {individualAudio}></ListenBox>
+            </li>
           
           )
         })
-      ):null)}
-
+      }{
+      vis == false && <text>{waitingText}</text>
+    }
+    </div>
     </>
   )
 }
 /*{(audioURLList != null ?(
         <Text>{audioURLList.length}</Text>
       ):null)}
+
 
 
       <audio src={individualAudio} type='audio/mpeg' controls></audio>
