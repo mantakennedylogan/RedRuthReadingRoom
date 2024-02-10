@@ -50,6 +50,8 @@ const AudioRecorder = () => {
 		mediaRecorder.current.ondataavailable = (event) => {
 			if (typeof event.data === "undefined") return;
 			if (event.data.size === 0) return;
+			console.log ('data\n')
+			console.log (event.data.text())
 			localAudioChunks.push(event.data);
 			
 		};
@@ -66,10 +68,14 @@ const AudioRecorder = () => {
 			// save audio to url so it can be played back before submission
 			console.log("AUDIO CUNKS")
 			console.log(audioChunks)
+			console.log(typeof(audioChunks))
+
 			const audioMime = new Blob(audioChunks, { type: 'mimeType' });
 			console.log(audioMime)
+
 			const audioUrl = URL.createObjectURL(audioMime);
 			setAudioMime(audioUrl);
+			console.log(audioUrl)
 			
 			// save audio in correct wav format or s3 bucket upload
 			const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });

@@ -276,13 +276,13 @@ server.get('/api/admin/getAudioFile', (req, res) =>{
     const s3 = new AWS.S3();
     
     s3.getObject(
-        { Bucket: Bucket, Key: key },
+        { Bucket: Bucket, Key: key, ResponseContentType: 'audio/mpeg'},
         function (error, data) {
           if (error != null) {
             console.log("Failed to retrieve an object: " + error);
           } else {
-            console.log(data.Body)
-            
+            console.log(data)
+            res.set('Content-Type', 'audio/mpeg')
             res.json(data)
           }
         })
