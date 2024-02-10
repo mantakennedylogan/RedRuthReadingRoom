@@ -260,8 +260,9 @@ server.post('/api/upload/', upload.single('audio'), (req, res) => {
 // Send Audio form S3 to react
 
 server.get('/api/admin/getAudioFile', (req, res) =>{
-    let key = '1707180583513.m4a'
-    console.log("BIG TIME RUSH THING\n\n\n")
+    console.log(req.query.file_id);
+    let carl = req.query.file_id +".m4a";
+    console.log(carl);
 
     const accessKeyId = 'AKIA2WTBG4K3GELKESGS';
       const secretAccessKey = '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';
@@ -276,7 +277,7 @@ server.get('/api/admin/getAudioFile', (req, res) =>{
     const s3 = new AWS.S3();
     
     s3.getObject(
-        { Bucket: Bucket, Key: key, ResponseContentType: 'audio/mpeg'},
+        { Bucket: Bucket, Key: carl, ResponseContentType: 'audio/mpeg'},
         function (error, data) {
           if (error != null) {
             console.log("Failed to retrieve an object: " + error);
@@ -288,6 +289,15 @@ server.get('/api/admin/getAudioFile', (req, res) =>{
         })
 
     
+})
+
+// returns all of the audio file names for a single prompt
+server.get('/api/admin/getAudioFilesByPrompt', (req, res) =>{
+    collection_id = '666' //hard coded for now
+    connection.query('SELECT t_audio_file.* FROM t_audio_file WHERE prompt_id = ?', [collection_id], function (error, results, fields) {
+        if (error) throw error;
+        res.json(results);
+        });
 })
 
 module.exports = server;
