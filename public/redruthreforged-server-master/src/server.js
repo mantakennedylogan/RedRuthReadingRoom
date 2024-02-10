@@ -260,8 +260,9 @@ server.post('/api/upload/', upload.single('audio'), (req, res) => {
 // Send Audio form S3 to react
 
 server.get('/api/admin/getAudioFile', (req, res) =>{
-    let key = '1707180583513.m4a'
-    console.log("BIG TIME RUSH THING\n\n\n")
+    //let key = '1707180583513.m4a'
+    let key = req.query.file_id + '.m4a'
+    console.log(key)
 
     const accessKeyId = 'AKIA2WTBG4K3GELKESGS';
       const secretAccessKey = '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';
@@ -288,6 +289,16 @@ server.get('/api/admin/getAudioFile', (req, res) =>{
         })
 
     
+})
+
+server.get('/api/admin/getListOfFiles', (req, res) => {
+    console.log('here')
+    let prompt_id = req.query.prompt_id
+    console.log(prompt_id)
+    connection.query('SELECT t_audio_file.* from t_audio_file WHERE prompt_id = ?', prompt_id, function (error, results, fields) {
+        if (error) throw error;
+        res.json(results);
+        });
 })
 
 module.exports = server;
