@@ -265,14 +265,14 @@ server.get('/api/admin/getAudioFile', (req, res) =>{
     console.log(key)
 
     const accessKeyId = 'AKIA2WTBG4K3GELKESGS';
-      const secretAccessKey = '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';
-      const region = 'us-west-2';
-      const Bucket = 'redruth-bucket';
-      console.log(region);
-      AWS.config.update({ // Credentials are OK
-        accessKeyId: accessKeyId,
-        secretAccessKey: secretAccessKey,
-        region: region
+    const secretAccessKey = 'LQNAcBUrON8jOshkRoYrAROnkhWbQgX4zuoSgL2Y';
+    const region = 'us-west-2';
+    const Bucket = 'redruth-bucket';
+    console.log(region);
+    AWS.config.update({ // Credentials are OK
+      accessKeyId: accessKeyId,
+      secretAccessKey: secretAccessKey,
+      region: region
     });
     const s3 = new AWS.S3();
     
@@ -291,14 +291,47 @@ server.get('/api/admin/getAudioFile', (req, res) =>{
     
 })
 
-server.get('/api/admin/getListOfFiles', (req, res) => {
-    console.log('here')
+server.get('/api/admin/getListOfFiles', (req, res) => { 
     let prompt_id = req.query.prompt_id
-    console.log(prompt_id)
     connection.query('SELECT t_audio_file.* from t_audio_file WHERE prompt_id = ?', prompt_id, function (error, results, fields) {
         if (error) throw error;
         res.json(results);
         });
+})
+
+server.get('/api/admin/getPromptName', (req, res) =>{
+    let prompt_id = req.query.prompt_id
+    connection.query('SELECT prompt from t_prompt WHERE prompt_id = ?', prompt_id, function (error, results, fields) {
+        if (error) throw error;
+        res.json(results);
+        });
+})
+server.get('/api/admin/RemoveAudio', (req, res) =>{
+    //TODO make sure audio is removed from everything
+    // Deleates form database but not S3 bucket
+    let file_id = req.query.file_id
+    const accessKeyId = 'AKIA2WTBG4K3GELKESGS';
+    const secretAccessKey = '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';
+    const region = 'us-west-2';
+    const Bucket = 'redruth-bucket';
+    console.log(region);
+    AWS.config.update({ // Credentials are OK
+      accessKeyId: accessKeyId,
+      secretAccessKey: secretAccessKey,
+      region: region
+    });
+    const s3 = new AWS.S3();
+    const input = {
+        "Bucket": Bucket,
+        "Key": file_id+".m4a"
+      };
+    console.log(s3.deleteObject(input));
+    
+    connection.query('DELETE FROM t_audio_file WHERE file_id = ?', file_id, function (error, results, fields) {
+        if (error) throw error;
+        res.json(results);
+        });
+    
 })
 
 module.exports = server;

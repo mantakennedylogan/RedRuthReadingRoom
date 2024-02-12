@@ -8,6 +8,7 @@ function Listen() {
   const [audioURL, setAudioUrl] = React.useState(null)
   const [audioURLList, setAudioUrlList] = React.useState(null)
   const [waitingText, setwaitingText] = React.useState("")
+  const [promptName, setPromptName] = React.useState("")
 console.log(waitingText)
   const getSingleAudio = async() => {
     const response = await axios.get('/api/admin/getAudioFile?file_id=' + '1707549335140'); //HARD CODED
@@ -27,6 +28,9 @@ console.log(waitingText)
   const getMutupleAudio = async() => {
     setwaitingText('Please wait while we get your data')
     const prompt_id = '666' // HARD CODED FOR NOW
+    const pname = await axios.get('/api/admin/getPromptName?prompt_id=' + prompt_id)
+    console.log(pname.data[0].prompt)
+    setPromptName(pname.data[0].prompt)
     console.log("a")
     const response = await axios.get('/api/admin/getListOfFiles?prompt_id=' + prompt_id);
     console.log("b")
@@ -42,7 +46,7 @@ console.log(waitingText)
         const fileToAdd = await axios.get('/api/admin/getAudioFile?file_id=' + response.data[i].file_id);
         console.log(fileToAdd)
         const audioBlob = new Blob([new Uint8Array(fileToAdd.data.Body.data)], { type: 'audio/wav' });
-        audioList = [...audioList, URL.createObjectURL(audioBlob)]
+        audioList = [...audioList, {URL: URL.createObjectURL(audioBlob), file_id: response.data[i].file_id}]
         
       }
 
@@ -68,15 +72,27 @@ console.log(waitingText)
       
       <div style={{paddingLeft: 30}}>
       {vis == true &&
-        
+        <table style = {{backgroundColor : 'white'}}>
+        <tr>
+          <td>Name</td>
+          <td>prompt</td>
+          <td>Recording</td>
+          <td>Deleate</td>
+        </tr>
+        {
         audioURLList.map((individualAudio) =>{
           return(
-            <li>
-            <ListenBox audio= {individualAudio}></ListenBox>
-            </li>
+            <tr style = {{backgroundColor : 'white',
+            borderColor: 'black',
+            borderWidth: 100}}>
+            <ListenBox data = {individualAudio} prompt = {promptName}></ListenBox>
+            </tr>
           
           )
-        })
+          
+        })}
+        
+        </table>
       }{
       vis == false && <text>{waitingText}</text>
     }
