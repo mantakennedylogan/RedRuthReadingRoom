@@ -19,6 +19,7 @@ const AudioRecorder = () => {
 	const [audio, setAudio] = useState(null);
 	const [audioChunks, setAudioChunks] = useState([]);
 	const [audioMime, setAudioMime] = useState(null);
+	const [name, setName] = useState("")
 
 	const getMicrophonePermission = async () => {
 		if ("MediaRecorder" in window) {
@@ -92,7 +93,7 @@ const AudioRecorder = () => {
 		  //
 		  console.log(audio);
 	
-		  const response = await axios.post('/api/upload', formData, {
+		  const response = await axios.post('/api/upload?userName='+name, formData, {
 			headers: {
 			  'Content-Type': 'multipart/form-data'
 			}
@@ -129,6 +130,11 @@ const AudioRecorder = () => {
 						<a download href={audioMime} style={{color: '#323f54', textDecoration: 'none', fontSize: 12}}>
 							Download Recording
 						</a>
+						<br></br>
+						<form>
+							<input type="text" name="nameInput"  onInput={e => setName(e.target.value)}></input>
+						</form>
+						<text>{name}</text>
 						<br></br>
         				<button onClick={uploadAudio} style={{marginTop: '3rem', background:'#323f54', color: '#faf9f6', fontSize: 20, borderRadius: 5, padding: 10, paddingLeft:20, paddingRight:20 }}>SUBMIT</button>	
 					</div>

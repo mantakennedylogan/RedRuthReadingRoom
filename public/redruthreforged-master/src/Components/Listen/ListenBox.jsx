@@ -4,12 +4,17 @@ import axios from '../../API/axios'
 
 function ListenBox(params){  
     console.log(params)
+    let name = params.data.name
+    if(name == null){
+        console.log("no mane")
+       name = "No Name"
+    }
     async function Deleate(){
         await axios.get('/api/admin/RemoveAudio?file_id=' + params.data.file_id)
     }
     return(
             <>
-            <td>Jhon Smith</td>
+            <td>{name}</td>
             <td>{params.prompt}</td>
             <td>
             <audio src={params.data.URL} type='audio/mpeg' controls></audio> 

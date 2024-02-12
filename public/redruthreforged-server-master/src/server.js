@@ -160,10 +160,10 @@ server.get('/api/admin/update/collectionpubliclistenflg', (req, res) => {
         });
 })
 
-function uploadAudioToDatabase(file_id, user_id, prompt_id){
+function uploadAudioToDatabase(file_id, user_id, prompt_id, userName){
     prompt_id = 666; // FOR NOW HARD CODED
     user_id = 12345; // FOR NOW HARD CODED
-    connection.query("INSERT INTO t_audio_file (file_id, user_id, prompt_id) VALUES (?, ?, ?)", [file_id, user_id, prompt_id]);
+    connection.query("INSERT INTO t_audio_file (file_id, user_id, prompt_id, name) VALUES (?, ?, ?, ?)", [file_id, user_id, prompt_id,userName]);
 }
 
 
@@ -233,6 +233,7 @@ server.post('/api/upload/', upload.single('audio'), (req, res) => {
     const audioPath = req.file.path; 
     const fileContent = fs.readFileSync(audioPath);
     const name = Date.now().toString() + '.m4a';
+    const userName = req.query.userName;
 
     const accessKeyId = 'AKIA2WTBG4K3GELKESGS';
       const secretAccessKey = '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';
@@ -254,7 +255,7 @@ server.post('/api/upload/', upload.single('audio'), (req, res) => {
       },function (res) {
         console.log('S3 put object response: ' + res); 
     });
-    uploadAudioToDatabase(name, '12345', '666');
+    uploadAudioToDatabase(name, '12345', '666',userName);
 });
 
 // Send Audio form S3 to react
@@ -325,7 +326,11 @@ server.get('/api/admin/RemoveAudio', (req, res) =>{
         "Bucket": Bucket,
         "Key": file_id+".m4a"
       };
-    console.log(s3.deleteObject(input));
+    s3.deleteObject(input, function (err,data){
+        // ACCESS DENIED NED TO FIX
+        if (err) console.log(err, err.stack);  // error
+        else     console.log("deleated");
+    });
     
     connection.query('DELETE FROM t_audio_file WHERE file_id = ?', file_id, function (error, results, fields) {
         if (error) throw error;

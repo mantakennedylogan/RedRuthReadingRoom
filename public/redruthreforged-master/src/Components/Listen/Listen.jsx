@@ -46,7 +46,7 @@ console.log(waitingText)
         const fileToAdd = await axios.get('/api/admin/getAudioFile?file_id=' + response.data[i].file_id);
         console.log(fileToAdd)
         const audioBlob = new Blob([new Uint8Array(fileToAdd.data.Body.data)], { type: 'audio/wav' });
-        audioList = [...audioList, {URL: URL.createObjectURL(audioBlob), file_id: response.data[i].file_id}]
+        audioList = [...audioList, {URL: URL.createObjectURL(audioBlob), file_id: response.data[i].file_id, name: response.data[i].name}]
         
       }
 
