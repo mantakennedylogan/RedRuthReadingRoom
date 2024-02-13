@@ -160,7 +160,7 @@ server.get('/api/admin/update/collectionpubliclistenflg', (req, res) => {
         });
 })
 
-function uploadAudioToDatabase(file_id, user_id, prompt_id, userName){
+function uploadAudioToDatabase(file_id, prompt_id, name){
     prompt_id = 666; // FOR NOW HARD CODED
     user_id = 12345; // FOR NOW HARD CODED
     console.log(userName)
@@ -237,6 +237,11 @@ server.post('/api/upload/', upload.single('audio'), (req, res) => {
     
     const userName = req.query.userName;
 
+    
+    //const timeStamp = req.query.timer;
+    //console.log('Username: '+userName);
+    console.log('timer: '+timeStamp);
+
     const accessKeyId = 'AKIA2WTBG4K3GELKESGS';
       const secretAccessKey = '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';
       const region = 'us-west-2';
@@ -257,7 +262,8 @@ server.post('/api/upload/', upload.single('audio'), (req, res) => {
       },function (res) {
         console.log('S3 put object response: ' + res); 
     });
-    uploadAudioToDatabase(name, '12345', '666',userName);
+    uploadAudioToDatabase(name, '666', userName);
+
 });
 
 // Send Audio form S3 to react
