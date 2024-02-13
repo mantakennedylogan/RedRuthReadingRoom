@@ -163,6 +163,7 @@ server.get('/api/admin/update/collectionpubliclistenflg', (req, res) => {
 function uploadAudioToDatabase(file_id, user_id, prompt_id, userName){
     prompt_id = 666; // FOR NOW HARD CODED
     user_id = 12345; // FOR NOW HARD CODED
+    console.log(userName)
     connection.query("INSERT INTO t_audio_file (file_id, user_id, prompt_id, name) VALUES (?, ?, ?, ?)", [file_id, user_id, prompt_id,userName]);
 }
 
@@ -233,6 +234,7 @@ server.post('/api/upload/', upload.single('audio'), (req, res) => {
     const audioPath = req.file.path; 
     const fileContent = fs.readFileSync(audioPath);
     const name = Date.now().toString() + '.m4a';
+    
     const userName = req.query.userName;
 
     const accessKeyId = 'AKIA2WTBG4K3GELKESGS';

@@ -92,6 +92,7 @@ const AudioRecorder = () => {
 		  formData.append('audio', audio, 'submission.wav');
 		  //
 		  console.log(audio);
+		  
 	
 		  const response = await axios.post('/api/upload?userName='+name, formData, {
 			headers: {
