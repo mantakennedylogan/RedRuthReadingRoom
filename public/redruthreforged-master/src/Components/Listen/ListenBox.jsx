@@ -3,6 +3,7 @@ import axios from '../../API/axios'
 
 
 function ListenBox(params){  
+    const [vis, setVis] = React.useState(true)
     console.log(params)
     let name = params.data.name
     if(name == null){
@@ -10,10 +11,12 @@ function ListenBox(params){
        name = "No Name"
     }
     async function Deleate(){
+        setVis(false)
         await axios.get('/api/admin/RemoveAudio?file_id=' + params.data.file_id)
     }
     return(
-            <>
+        <>
+            {vis == true && <>
             <td>{name}</td>
             <td>{params.prompt}</td>
             <td>
@@ -22,7 +25,8 @@ function ListenBox(params){
             <td>
             <button onClick={Deleate}>DELEATE</button>  
             </td>
-            </>    
+            </>    }
+            </>
     )
 }
 
