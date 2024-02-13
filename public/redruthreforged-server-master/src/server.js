@@ -60,8 +60,10 @@ server.get('/api/getprompt', (req, res) => {
         //if (error) throw error;
         if (error) {
             console.error('prompt_id is this: ' + prompt_id);
-
         }
+        console.log("res");
+        console.log(results[0]);
+        console.log('end of res');
         res.json(results[0]);
         });
     }
@@ -162,6 +164,7 @@ function uploadAudioToDatabase(file_id, prompt_id, name){
     prompt_id = 666; // FOR NOW HARD CODED
     //user_id = 12345; // for future implementation with different user types (admin/regular)
     connection.query("INSERT INTO t_audio_file (file_id, prompt_id, name) VALUES (?, ?, ?)", [file_id, prompt_id, name]);
+
 }
 
 
@@ -231,9 +234,10 @@ server.post('/api/upload/', upload.single('audio'), (req, res) => {
     const audioPath = req.file.path; 
     const fileContent = fs.readFileSync(audioPath);
     const name = Date.now().toString() + '.m4a';
-
     const userName = req.query.userName;
-    const timeStamp = req.query.timer;
+
+    
+    //const timeStamp = req.query.timer;
     //console.log('Username: '+userName);
     console.log('timer: '+timeStamp);
 
@@ -258,6 +262,88 @@ server.post('/api/upload/', upload.single('audio'), (req, res) => {
         console.log('S3 put object response: ' + res); 
     });
     uploadAudioToDatabase(name, '666', userName);
+
 });
+
+// Send Audio form S3 to react
+
+server.get('/api/admin/getAudioFile', (req, res) =>{
+    //let key = '1707180583513.m4a'
+    let key = req.query.file_id + '.m4a'
+    console.log(key)
+
+    const accessKeyId = 'AKIA2WTBG4K3GELKESGS';
+    const secretAccessKey = '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';
+    const region = 'us-west-2';
+    const Bucket = 'redruth-bucket';
+    console.log(region);
+    AWS.config.update({ // Credentials are OK
+      accessKeyId: accessKeyId,
+      secretAccessKey: secretAccessKey,
+      region: region
+    });
+    const s3 = new AWS.S3();
+    
+    s3.getObject(
+        { Bucket: Bucket, Key: key, ResponseContentType: 'audio/mpeg'},
+        function (error, data) {
+          if (error != null) {
+            console.log("Failed to retrieve an object: " + error);
+          } else {
+            console.log(data)
+            res.set('Content-Type', 'audio/mpeg')
+            res.json(data)
+          }
+        })
+
+    
+})
+
+server.get('/api/admin/getListOfFiles', (req, res) => { 
+    let prompt_id = req.query.prompt_id
+    connection.query('SELECT t_audio_file.* from t_audio_file WHERE prompt_id = ?', prompt_id, function (error, results, fields) {
+        if (error) throw error;
+        res.json(results);
+        });
+})
+
+server.get('/api/admin/getPromptName', (req, res) =>{
+    let prompt_id = req.query.prompt_id
+    connection.query('SELECT prompt from t_prompt WHERE prompt_id = ?', prompt_id, function (error, results, fields) {
+        if (error) throw error;
+        res.json(results);
+        });
+})
+server.get('/api/admin/RemoveAudio', (req, res) =>{
+    //TODO make sure audio is removed from everything
+    // Deleates form database but not S3 bucket
+    let file_id = req.query.file_id
+    const accessKeyId = 'AKIA2WTBG4K3GELKESGS';
+    const secretAccessKey = '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';
+    const region = 'us-west-2';
+    const Bucket = 'redruth-bucket';
+    console.log(region);
+    AWS.config.update({ // Credentials are OK
+      accessKeyId: accessKeyId,
+      secretAccessKey: secretAccessKey,
+      region: region
+    });
+    const s3 = new AWS.S3();
+    const input = {
+        "Bucket": Bucket,
+        "Key": file_id+".m4a"
+      };
+    s3.deleteObject(input, function (err,data){
+        // ACCESS DENIED NED TO FIX
+        if (err) console.log(err, err.stack);  // error
+        else     console.log("deleated");
+    });
+    
+    connection.query('DELETE FROM t_audio_file WHERE file_id = ?', file_id, function (error, results, fields) {
+        if (error) throw error;
+        res.json(results);
+        });
+    
+})
 
 module.exports = server;

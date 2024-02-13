@@ -57,8 +57,12 @@ const AudioRecorder = () => {
 		mediaRecorder.current.ondataavailable = (event) => {
 			if (typeof event.data === "undefined") return;
 			if (event.data.size === 0) return;
+			console.log ('data\n')
+			console.log (event.data.text())
 			localAudioChunks.push(event.data);
+			
 		};
+
 
 		setAudioChunks(localAudioChunks);
 	};
@@ -70,9 +74,16 @@ const AudioRecorder = () => {
 
 		mediaRecorder.current.onstop = () => {
 			// save audio to url so it can be played back before submission
+			console.log("AUDIO CUNKS")
+			console.log(audioChunks)
+			console.log(typeof(audioChunks))
+
 			const audioMime = new Blob(audioChunks, { type: 'mimeType' });
+			console.log(audioMime)
+
 			const audioUrl = URL.createObjectURL(audioMime);
 			setAudioMime(audioUrl);
+			console.log(audioUrl)
 			
 			// save audio in correct wav format or s3 bucket upload
 			const audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
@@ -137,8 +148,8 @@ const AudioRecorder = () => {
 							Download Recording
 						</a>
 						<br></br>
-						<br></br>
-						<form onSubmit={uploadAudio}> 
+
+						<form>
 							<label>Enter your full name:
 								<input 
 									type="text" 
@@ -146,11 +157,12 @@ const AudioRecorder = () => {
 									onChange={(e) => setName(e.target.value)}
 									/>
 							</label>
-							<br></br>
-							
-							<input type="submit" style={{marginTop: '3rem', background:'#323f54', color: '#faf9f6', fontSize: 20, borderRadius: 5, padding: 10, paddingLeft:20, paddingRight:20 }}/>
 						</form>
-        					
+
+						<text>{userName}</text>
+						<br></br>
+        				<button onClick={uploadAudio} style={{marginTop: '3rem', background:'#323f54', color: '#faf9f6', fontSize: 20, borderRadius: 5, padding: 10, paddingLeft:20, paddingRight:20 }}>SUBMIT</button>	
+
 					</div>
 				) : null}
 			</main>
