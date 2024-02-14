@@ -110,7 +110,7 @@ const AudioRecorder = () => {
 			},
 			params:{
 				'userName': userName,
-				'timer': timer ///HERE, doesnt work rn :(
+				//'timer': timer ///HERE, doesnt work rn :(
 				//prompt id
 				//title
 				//time duration
