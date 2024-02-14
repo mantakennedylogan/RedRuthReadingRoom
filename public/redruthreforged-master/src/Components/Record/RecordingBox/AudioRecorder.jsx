@@ -1,4 +1,6 @@
 import { useState, useRef, /*useEffect*/} from "react";
+import './Form.css';
+import { Typography } from '@mui/material';
 /*import AWS from 'aws-sdk'
 import ReactS3 from 'react-s3';
 
@@ -21,7 +23,9 @@ const AudioRecorder = () => {
 	const [audioMime, setAudioMime] = useState(null);
 
 	//form related
+	const [title, setTitle] = useState("");
 	const [userName, setName] = useState("");
+	const [phoneNum, setPhone] = useState("");
 	let timer = null;
 
 	
@@ -129,6 +133,7 @@ const AudioRecorder = () => {
 
 		<div>
 			<main>
+				
 				<div className="audio-controls" style={{textAlign: 'center', marginTop: '5rem' }}>
 					{!permission ? (
 						<img  onClick={getMicrophonePermission} style={{height: 150, }} src={disabledMic} alt="record button, get permission"/>
@@ -139,32 +144,47 @@ const AudioRecorder = () => {
 					{recordingStatus === "recording" ? (
 						<img  onClick={stopRecording} style={{height: 150, }} src={recordingMic} alt="record button, active"/>
 					) : null}
+				<br></br><br></br><br></br><br></br>
+				<Typography sx={{fontSize: 12}} align='center'>Note: Tap the icon above to activate your device's microphone. <br></br>
+																																When the icon turns red, your device's microphone is enabled, and when it turns green, it indicates that the microphone is actively recording. <br></br>
+																																Press the icon once more to stop recording. To initiate a new recording, tap the red microphone icon.<br></br></Typography>
+									
 				</div>
 				{audio ? (
-					<div className="audio-player" style={{textAlign: 'center', marginTop: '3rem' }}>
+					<div className="audio-player" style={{textAlign: 'center', marginTop: '3rem', marginBottom: '5rem' }}>
 						<audio src={audioMime} controls></audio>
 						<br></br>
 						<a download href={audioMime} style={{color: '#323f54', textDecoration: 'none', fontSize: 12}}>
 							Download Recording
 						</a>
 						<br></br>
-
-						<form>
-							<label>Enter your full name:
-								<input 
-									type="text" 
-									value={userName}
-									onChange={(e) => setName(e.target.value)}
-									/>
-							</label>
-						</form>
-
-						<text>{userName}</text>
 						<br></br>
-        				<button onClick={uploadAudio} style={{marginTop: '3rem', background:'#323f54', color: '#faf9f6', fontSize: 20, borderRadius: 5, padding: 10, paddingLeft:20, paddingRight:20 }}>SUBMIT</button>	
+						<div className="form-box">
+							<form >
+								
+								<label>Submission Details</label>
+								<br></br>
+								<input placeholder="Title" type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
+								
+								<br></br>
+								<input placeholder="Jane Doe" type="text" value={userName} onChange={(e) => setName(e.target.value)}/>
+								
+								<br></br>
 
+								<input placeholder="(xxx)-xxx-xxxx" type="text" value={phoneNum} onChange={(e) => setPhone(e.target.value)}/>
+								
+							</form>
+
+							<text>{userName}</text>
+							<br></br>
+							<button onClick={uploadAudio} style={{marginTop: '3rem', background:'#323f54', color: '#faf9f6', fontSize: 30, borderRadius: 5, padding: 20, paddingLeft:40, paddingRight:40 }}>SUBMIT</button>	
+
+						</div>
+
+						
 					</div>
 				) : null}
+				
 			</main>
 		</div>
 		</>
