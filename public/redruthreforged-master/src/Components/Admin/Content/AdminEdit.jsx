@@ -32,8 +32,13 @@ function AdminEdit() {
 
     const getMutupleAudio = async() => {
       setwaitingText('Please wait while we get your data')
+      setvis(false)
       console.log("PNAME")
       console.log(promptName)
+      if(promptName == null){
+        setwaitingText("No Prompt Name is selected")
+        return
+      }
       const prompt_id = await axios.get('/api/admin/getPromptId?prompt_name=' + promptName);
       console.log("RIGHT HERE IS A THING")
       console.log(prompt_id)
@@ -64,6 +69,7 @@ function AdminEdit() {
         console.log(audioURLList)
       } 
       setvis(true)
+      console.log(audioURLList.length === 0)
     }
   
   useEffect(() =>{
@@ -75,13 +81,20 @@ function AdminEdit() {
     console.log("col name")
     console.log(collectionName)
     getPrompts(e.target.value)
+    setPromptName(null)
 
+
+  }
+  async function handelPromptChange(e){
+    console.log(e.target.value)
+    setPromptName(e.target.value)
   }
   //<button onClick={getPrompts}>get prompts</button>
        
     return (
   
       <>
+
         <table>
           <tr>
             <td>Collection</td>
@@ -102,7 +115,7 @@ function AdminEdit() {
         </select></td>
         <td>
         {listOfPrompts != null && 
-        <select onChange={ e=> setPromptName(e.target.value)}>
+        <select onChange={ handelPromptChange }>
           {
           listOfPrompts.map((prompts) =>{
             
@@ -121,7 +134,9 @@ function AdminEdit() {
         
         
         <div style={{paddingLeft: 30}}>
-        {vis == true &&
+        {vis == true && audioURLList.length == 0 && waitingText == 'Please wait while we get your data' &&
+        <text> There are no audios in this prompt</text> }
+        {vis == true && audioURLList.length != 0 &&
           <table style = {{backgroundColor : 'white'}}>
           <tr>
             <td>Name</td>
@@ -146,6 +161,7 @@ function AdminEdit() {
         }{
         vis == false && <text>{waitingText}</text>
       }
+      
       </div>
       </>
     )
