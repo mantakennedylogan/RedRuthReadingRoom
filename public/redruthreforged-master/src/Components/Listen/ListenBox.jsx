@@ -4,10 +4,9 @@ import axios from '../../API/axios'
 
 function ListenBox(params){  
     const [vis, setVis] = React.useState(true)
-    console.log(params)
+    
     let name = params.data.name
     if(name == null){
-        console.log("no mane")
        name = "No Name"
     }
     async function Deleate(){
