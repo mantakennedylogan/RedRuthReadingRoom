@@ -216,6 +216,19 @@ require('dotenv').config();
 server.set('json spaces', 5); // to pretify json response
 
 
+// create collection in admin console
+server.post('/api/admin/createcollection/', (req, res) => {
+    const info = req.body;
+    var user_id = 12345;
+    var collection_name = info.cName;
+    var collection_description = info.cDescription;
+    
+    // add collection to database
+    connection.query('Insert into t_collection (user_id, title, description, created_dt) values (?, ? , ?, CURDATE())', [user_id, collection_name, collection_description], function (error, results, fields) {
+        if (error) throw error;
+        res.json(results);
+        });
+})
 
 // Multer Configuration
 const multer = require('multer');
