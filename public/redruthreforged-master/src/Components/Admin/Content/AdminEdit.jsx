@@ -11,7 +11,7 @@ function AdminEdit() {
     const [collectionName, setCollectionName] = React.useState("")
     const [listOfUserCollections, setlistOfUserCollections] = React.useState([])
     const [listOfPrompts, setListOfPrompts] = React.useState([])
-    const [promptName, setPromptName]= React.useState("")
+    const [promptName, setPromptName]= React.useState(null)
 
     
     const getColections = async() =>{
@@ -147,15 +147,4 @@ function AdminEdit() {
       </>
     )
   }
-  /*{(audioURLList != null ?(
-          <Text>{audioURLList.length}</Text>
-        ):null)}
-  
-  
-  
-        <audio src={individualAudio} type='audio/mpeg' controls></audio>
-  
-  */
- 
-
 export default AdminEdit
