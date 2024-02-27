@@ -9,8 +9,12 @@ function ListenBox(params){
     const [vis, setVis] = React.useState(true)
     
     let name = params.data.name
+    let title = params.data.title
     if(name == null){
        name = "No Name"
+    }
+    if(title == null){
+        title = "No Tile"
     }
     async function Deleate(){
         setVis(false)
@@ -20,7 +24,7 @@ function ListenBox(params){
         <>
             {vis == true && <>
             <td>{name}</td>
-            <td>{params.prompt}</td>
+            <td>{title}</td>
             <td>
             <audio src={params.data.URL} type='audio/mpeg' controls></audio> 
             </td>
