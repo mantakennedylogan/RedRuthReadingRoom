@@ -45,9 +45,10 @@ function AdminEdit() {
       else{
         let audioList = []
         for ( let i = 0; i < response.data.length; i++){
+          
           const fileToAdd = await axios.get('/api/admin/getAudioFile?file_id=' + response.data[i].file_id);
           const audioBlob = new Blob([new Uint8Array(fileToAdd.data.Body.data)], { type: 'audio/wav' });
-          audioList = [...audioList, {URL: URL.createObjectURL(audioBlob), file_id: response.data[i].file_id, name: response.data[i].name}]
+          audioList = [...audioList, {URL: URL.createObjectURL(audioBlob), file_id: response.data[i].file_id, name: response.data[i].name, title: response.data[i].title}]
           
         }
   
@@ -135,7 +136,7 @@ function AdminEdit() {
         <TableHead>
           <TableRow>
             <TableCell>Name</TableCell>
-            <TableCell>Prompt</TableCell>
+            <TableCell>Title</TableCell>
             <TableCell>Recording</TableCell>
             <TableCell>Delete</TableCell>
           </TableRow>
@@ -145,7 +146,7 @@ function AdminEdit() {
           audioURLList.map((individualAudio) =>{
             return(
               <TableRow>
-                <ListenBox data = {individualAudio} prompt = {promptName}></ListenBox>
+                <ListenBox data = {individualAudio} prompt = {promptName}  ></ListenBox>
               </TableRow>        
             )
           })}
