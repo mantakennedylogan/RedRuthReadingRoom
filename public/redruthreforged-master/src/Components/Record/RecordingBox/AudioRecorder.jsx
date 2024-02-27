@@ -102,6 +102,8 @@ const AudioRecorder = (props) => {
 
 
 	const uploadAudio = async () => {
+		if(!alert('Your submission has been sent!')){window.location.reload();}
+		
 		try {
 		  const formData = new FormData();
 		  formData.append('audio', audio, 'submission.wav');
@@ -123,12 +125,14 @@ const AudioRecorder = (props) => {
 				'email': email
 			}
 		  });
-
 	
 		  console.log('File uploaded successfully:', response.data);
+		
 		} catch (error) {
 		  console.error('Error uploading file:', error);
 		}
+		
+		
 	};
 
 	function MouseOver(event) {
