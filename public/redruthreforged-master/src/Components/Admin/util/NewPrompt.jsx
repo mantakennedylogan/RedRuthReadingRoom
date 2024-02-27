@@ -51,7 +51,7 @@ function CreatePromptButton() {
 
     async function handelCollectionChange(e){
         setCollectionName(e.target.value);
-        var tempID = await axios.get('/api/admin/getCollectionId?collection_name='+collectionName);
+        var tempID = await axios.get('/api/admin/getCollectionId?collection_name='+e.target.value);
         setCollectionID(tempID.data[0].collection_id);
       }
 

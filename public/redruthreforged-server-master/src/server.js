@@ -238,16 +238,11 @@ server.post('/api/admin/createprompt/', (req, res) => {
     var prompt_name = info.pName;
     var prompt_description = info.pDescription;
 
-    console.log(collectionID);
-    
-    //-- Insert into t_prompt (collection_id, user_id, prompt, description, created_dt) values (11111, 12345, ' prompt goes crazy', 'testing', CURDATE());
-
-
     //add prompt to database
-    // connection.query('Insert into t_prompt (collection_id, user_id, prompt, description, created_dt) values (?, ?, ? , ?, CURDATE())', [collectionID, user_id, prompt_name, prompt_description], function (error, results, fields) {
-    //     if (error) throw error;
-    //     res.json(results);
-    //     });
+    connection.query('Insert into t_prompt (collection_id, user_id, prompt, description, created_dt) values (?, ?, ? , ?, CURDATE())', [collectionID, user_id, prompt_name, prompt_description], function (error, results, fields) {
+        if (error) throw error;
+        res.json(results);
+        });
 })
 
 // Multer Configuration
