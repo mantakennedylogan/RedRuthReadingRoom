@@ -44,7 +44,7 @@ function RecordingBox(props) {
                     <Typography sx={{fontSize: 40, backgroundColor:'#323f54', color:'whitesmoke'}} align='center'>{props.prompt}</Typography>
                     <Typography sx={{fontSize: 24}} align='center'>{props.desc}</Typography>
                     
-                    <AudioRecorder />  
+                    <AudioRecorder prompt_id = {props.promptid}/>  
                 </Box>
             </Box>
             </div>

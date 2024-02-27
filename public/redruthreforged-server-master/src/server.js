@@ -160,11 +160,13 @@ server.get('/api/admin/update/collectionpubliclistenflg', (req, res) => {
         });
 })
 
-function uploadAudioToDatabase(file_id, user_id, prompt_id, userName){
-    prompt_id = 666; // FOR NOW HARD CODED
-    user_id = 12345; // FOR NOW HARD CODED
-    
-    connection.query("INSERT INTO t_audio_file (file_id, user_id, prompt_id, name) VALUES (?, ?, ?, ?)", [file_id, user_id, prompt_id,userName]);
+function uploadAudioToDatabase(file_id, user_id, prompt_id, userName, title, phoneNum, email){
+    //user_id = "12345" //Hardcoded Value
+
+    //Future logic for more than one admin user
+    //user_id = connection.query("SELECT prompt_id, user_id FROM t_prompt WHERE prompt_id = ?", [prompt_id]);
+
+    connection.query("INSERT INTO t_audio_file (file_id, user_id, prompt_id, name, title, phone_num, email) VALUES (?, ?, ?, ?, ?, ?, ?)", [file_id, user_id, prompt_id, userName, title, phoneNum, email]);
 }
 
 
@@ -248,7 +250,6 @@ server.post('/api/upload/', upload.single('audio'), (req, res) => {
     const fileContent = fs.readFileSync(audioPath);
     const name = Date.now().toString() + '.m4a';
     
-    const userName = req.query.userName;
 
     const accessKeyId = 'AKIA2WTBG4K3GELKESGS';
       const secretAccessKey = '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';
@@ -270,7 +271,14 @@ server.post('/api/upload/', upload.single('audio'), (req, res) => {
       },function (res) {
         console.log('S3 put object response: ' + res); 
     });
-    uploadAudioToDatabase(name, '12345', '666',userName);
+
+    const userName = req.query.userName;
+    const title = req.query.title;
+    const phoneNum = req.query.phoneNum;
+    const promptId = req.query.promptId;
+    const email = req.query.email;
+
+    uploadAudioToDatabase(name, '12345', promptId ,userName, title, phoneNum, email);
 });
 
 // Send Audio form S3 to react

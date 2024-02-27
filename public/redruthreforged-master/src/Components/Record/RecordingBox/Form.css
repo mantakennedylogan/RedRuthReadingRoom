@@ -22,7 +22,7 @@ textarea {
 
 .form-box {
     min-width: 100%;
-    height: 80vh;
+    height: 90vh;
     border: solid #323f54 2vw;
     /* border: 1px solid red; */
     margin: 0vw;
@@ -41,4 +41,6 @@ textarea {
     text-align: center;
     margin: 0 auto; 
 }
+
+
 

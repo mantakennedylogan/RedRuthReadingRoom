@@ -13,7 +13,7 @@ import recordingMic from "../../../images/recordingMic.png";
 import axios from '../../../API/axios';
 //const mimeType = "audio/webm";
 
-const AudioRecorder = () => {
+const AudioRecorder = (props) => {
 	const [permission, setPermission] = useState(false);
 	const mediaRecorder = useRef(null);
 	const [recordingStatus, setRecordingStatus] = useState("inactive");
@@ -26,6 +26,8 @@ const AudioRecorder = () => {
 	const [title, setTitle] = useState("");
 	const [userName, setName] = useState("");
 	const [phoneNum, setPhone] = useState("");
+	const [email, setEmail] = useState("");
+	const promptId = props.prompt_id;
 	let timer = null;
 
 	
@@ -114,10 +116,11 @@ const AudioRecorder = () => {
 			},
 			params:{
 				'userName': userName,
-				//'timer': timer ///HERE, doesnt work rn :(
-				//prompt id
-				//title
-				//time duration
+				//'timestamp': timer ///doesnt work rn :(
+				'promptId': promptId,
+				'title': title,
+				'phoneNum': phoneNum,
+				'email': email
 			}
 		  });
 
@@ -127,6 +130,13 @@ const AudioRecorder = () => {
 		  console.error('Error uploading file:', error);
 		}
 	};
+
+	function MouseOver(event) {
+        event.target.style.background = '#6b86b3';
+    }
+	function MouseOut(event){
+		event.target.style.background='#323f54';
+	}
 
 	return (
 		<>		
@@ -173,11 +183,14 @@ const AudioRecorder = () => {
 
 								<input placeholder="(xxx)-xxx-xxxx" type="text" value={phoneNum} onChange={(e) => setPhone(e.target.value)}/>
 								
+								<br></br>
+
+								<input placeholder="Jane_Doe@email.org" type="text" value={email} onChange={(e) => setEmail(e.target.value)}/>
+								
 							</form>
 
-							<text>{userName}</text>
 							<br></br>
-							<button onClick={uploadAudio} style={{marginTop: '3rem', background:'#323f54', color: '#faf9f6', fontSize: 30, borderRadius: 5, padding: 20, paddingLeft:40, paddingRight:40 }}>SUBMIT</button>	
+							<button onClick={uploadAudio} onMouseOver={MouseOver} onMouseOut={MouseOut} style={{marginTop: '3rem', background:'#323f54', color: '#faf9f6', fontSize: 30, borderRadius: 5, padding: 20, paddingLeft:40, paddingRight:40}}>SUBMIT</button>	
 
 						</div>
 
