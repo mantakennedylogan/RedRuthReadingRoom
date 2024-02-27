@@ -21,7 +21,9 @@ textarea {
 }
 
 .form-box input{
-    background-color: #dae5f7;
+    background-color: #e8effa;
+    height:6vh;
+    margin-bottom: 1%;
 }
 
 .form-box {
