@@ -32,7 +32,7 @@ function GetPromptURL() {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 400,
+        width: '30%',
         bgcolor: 'white',
         border: '2px solid #000',
         boxShadow: 24,

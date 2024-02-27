@@ -38,14 +38,14 @@ function AdminHome(props) {
 				<Grid xs={7}>
 					<Typography variant='h4'>Collections</Typography>
 				</Grid>
-				<Grid xs={1.9} sx={{}}>
+				<Grid xs={1.4} sx={{}}>
 					<GetPromptURL />
 				</Grid>
-				<Grid xs={.04} sx={{}}></Grid>
+				<Grid xs={.2} sx={{}}></Grid>
 				<Grid xs={1} sx={{}}>
 					<NewCollection />
 				</Grid>
-				<Grid xs={.4} sx={{}}></Grid>
+				<Grid xs={.2} sx={{}}></Grid>
 				<Grid xs={1}>
 					<NewPrompt />
 				</Grid>
