@@ -7,6 +7,7 @@ import PublicListenButton from '../Buttons/PublicListenButton';
 import NewCollection from '../util/NewCollection';
 import NewPrompt from '../util/NewPrompt';
 import Grid from '@mui/material/Grid';
+import GetPromptURL from '../util/GetPromptURL';
 
 // This component returns the 'home' view of the admin page, AKA the user's collections.
 // Returns some text and the table of collections/collection-related buttons
@@ -31,15 +32,20 @@ function AdminHome(props) {
 	return (
 		<Box>
 
-			<Grid container spacing={2}>
+			<Grid container spacing={3}>
 				<Grid xs={.2}></Grid>
-				<Grid xs={9.6}>
+				
+				<Grid xs={7}>
 					<Typography variant='h4'>Collections</Typography>
 				</Grid>
+				<Grid xs={1.9} sx={{}}>
+					<GetPromptURL />
+				</Grid>
+				<Grid xs={.04} sx={{}}></Grid>
 				<Grid xs={1} sx={{}}>
 					<NewCollection />
 				</Grid>
-				<Grid xs={.2} sx={{}}></Grid>
+				<Grid xs={.4} sx={{}}></Grid>
 				<Grid xs={1}>
 					<NewPrompt />
 				</Grid>
