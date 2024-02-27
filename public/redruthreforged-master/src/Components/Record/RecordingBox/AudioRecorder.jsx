@@ -106,7 +106,7 @@ const AudioRecorder = () => {
 		  //formData.append('userName', 'test name'/*userName*/);
 
 		  console.log(audio);
-		  //console.log(userName);
+		  
 	
 		  const response = await axios.post('/api/upload', formData, {
 			headers: {
@@ -114,7 +114,7 @@ const AudioRecorder = () => {
 			},
 			params:{
 				'userName': userName,
-				'timer': timer ///HERE, doesnt work rn :(
+				//'timer': timer ///HERE, doesnt work rn :(
 				//prompt id
 				//title
 				//time duration

@@ -160,11 +160,11 @@ server.get('/api/admin/update/collectionpubliclistenflg', (req, res) => {
         });
 })
 
-function uploadAudioToDatabase(file_id, prompt_id, name){
+function uploadAudioToDatabase(file_id, user_id, prompt_id, userName){
     prompt_id = 666; // FOR NOW HARD CODED
-    //user_id = 12345; // for future implementation with different user types (admin/regular)
-    connection.query("INSERT INTO t_audio_file (file_id, prompt_id, name) VALUES (?, ?, ?)", [file_id, prompt_id, name]);
-
+    user_id = 12345; // FOR NOW HARD CODED
+    
+    connection.query("INSERT INTO t_audio_file (file_id, user_id, prompt_id, name) VALUES (?, ?, ?, ?)", [file_id, user_id, prompt_id,userName]);
 }
 
 
@@ -216,6 +216,19 @@ require('dotenv').config();
 server.set('json spaces', 5); // to pretify json response
 
 
+// create collection in admin console
+server.post('/api/admin/createcollection/', (req, res) => {
+    const info = req.body;
+    var user_id = 12345;
+    var collection_name = info.cName;
+    var collection_description = info.cDescription;
+    
+    // add collection to database
+    connection.query('Insert into t_collection (user_id, title, description, created_dt) values (?, ? , ?, CURDATE())', [user_id, collection_name, collection_description], function (error, results, fields) {
+        if (error) throw error;
+        res.json(results);
+        });
+})
 
 // Multer Configuration
 const multer = require('multer');
@@ -234,12 +247,8 @@ server.post('/api/upload/', upload.single('audio'), (req, res) => {
     const audioPath = req.file.path; 
     const fileContent = fs.readFileSync(audioPath);
     const name = Date.now().toString() + '.m4a';
-    const userName = req.query.userName;
-
     
-    //const timeStamp = req.query.timer;
-    //console.log('Username: '+userName);
-    console.log('timer: '+timeStamp);
+    const userName = req.query.userName;
 
     const accessKeyId = 'AKIA2WTBG4K3GELKESGS';
       const secretAccessKey = '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';
@@ -261,8 +270,7 @@ server.post('/api/upload/', upload.single('audio'), (req, res) => {
       },function (res) {
         console.log('S3 put object response: ' + res); 
     });
-    uploadAudioToDatabase(name, '666', userName);
-
+    uploadAudioToDatabase(name, '12345', '666',userName);
 });
 
 // Send Audio form S3 to react
@@ -314,6 +322,32 @@ server.get('/api/admin/getPromptName', (req, res) =>{
         res.json(results);
         });
 })
+
+server.get('/api/admin/getPromptId', (req, res) =>{
+    let prompt_name = req.query.prompt_name
+    connection.query('SELECT prompt_id from t_prompt WHERE prompt = ?', prompt_name, function (error, results, fields) {
+        if (error) throw error;
+        res.json(results);
+        });
+})
+
+server.get('/api/admin/promptByCollection', (req, res) =>{
+    let collection_id = req.query.collection_id
+
+    connection.query('SELECT prompt from t_prompt WHERE collection_id = ?', collection_id, function (error, results, fields) {
+        if (error) throw error;
+        res.json(results);
+        });
+})
+
+server.get('/api/admin/getCollectionId', (req, res) =>{
+    let collection_name = req.query.collection_name
+    connection.query('SELECT collection_id from t_collection WHERE title = ?', collection_name, function (error, results, fields) {
+        if (error) throw error;
+        res.json(results);
+        });
+})
+
 server.get('/api/admin/RemoveAudio', (req, res) =>{
     //TODO make sure audio is removed from everything
     // Deleates form database but not S3 bucket
