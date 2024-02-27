@@ -172,7 +172,7 @@ const AudioRecorder = (props) => {
 						<div className="form-box">
 							<form >
 								
-								<label>Submission Details</label>
+								<label><h2>Submission Details</h2></label>
 								<br></br>
 								<input placeholder="Title" type="text" value={title} onChange={(e) => setTitle(e.target.value)}/>
 								

@@ -20,6 +20,10 @@ textarea {
     margin: 0 0 2vh 0;
 }
 
+.form-box input{
+    background-color: #dae5f7;
+}
+
 .form-box {
     min-width: 100%;
     height: 90vh;
