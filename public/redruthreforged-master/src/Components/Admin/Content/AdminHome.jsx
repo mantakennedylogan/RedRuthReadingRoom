@@ -1,13 +1,16 @@
-import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Modal, Collapse } from '@mui/material'
+import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Modal } from '@mui/material'
 import React, { useContext, useState, useEffect } from 'react'
 import AdminContext from '../../../Context/AdminContext';
 import moment from 'moment';
 import PublicRecordButton from '../Buttons/PublicRecordButton';
 import PublicListenButton from '../Buttons/PublicListenButton';
 import NewCollection from '../util/NewCollection';
+<<<<<<< HEAD
 import NewPrompt from '../util/NewPrompt';
 import Grid from '@mui/material/Grid';
 import GetPromptURL from '../util/GetPromptURL';
+=======
+>>>>>>> parent of fdc33543 (Merge pull request #7 from mantakennedylogan/create-prompt)
 
 // This component returns the 'home' view of the admin page, AKA the user's collections.
 // Returns some text and the table of collections/collection-related buttons
@@ -31,6 +34,7 @@ function AdminHome(props) {
 
 	return (
 		<Box>
+<<<<<<< HEAD
 
 			<Grid container spacing={3}>
 				<Grid xs={.2}></Grid>
@@ -53,6 +57,9 @@ function AdminHome(props) {
 
 			<br />
 
+=======
+			<Typography variant='h4'>Collections</Typography>
+>>>>>>> parent of fdc33543 (Merge pull request #7 from mantakennedylogan/create-prompt)
 			<TableContainer component={Paper}>
 				<Table>
 					<TableHead>
@@ -66,12 +73,10 @@ function AdminHome(props) {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						
 						{collections.map((collection) => {
 							return (
 							<TableRow sx={rowStyle} key={collection.collection_id} >
 								<TableCell onClick={() => updateCurrCollection(collection.collection_id, collection.title)}>{collection.title}</TableCell>
-									
 								<TableCell onClick={() => updateCurrCollection(collection.collection_id, collection.title)}>{collection.file_count}</TableCell>
 								<TableCell onClick={() => updateCurrCollection(collection.collection_id, collection.title)}>{collection.unlistened_count}</TableCell>
 								<TableCell onClick={() => updateCurrCollection(collection.collection_id, collection.title)}>{moment.utc(collection.created_dt).format("MMM Do, YYYY")}</TableCell>
@@ -80,7 +85,7 @@ function AdminHome(props) {
 							</TableRow>
 							)
 						})}
-						
+						<NewCollection />
 					</TableBody>
 				</Table>
 			</TableContainer>

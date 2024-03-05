@@ -40,7 +40,19 @@ function CreateCollectionButton() {
 
     return (
         <React.Fragment>
-            <Button variant="contained" onClick={handleOpen} sx={{backgroundColor: '#323f54'}}>New Collection</Button>
+            <TableRow>
+                <TableCell colSpan={5} sx={{
+                    textAlign: 'center',
+                    color: '#323f54'
+                }}>
+                    <Button onClick={handleOpen} sx={{
+                        width: '100%',
+                        '&:hover': {
+                            backgroundColor: '#dae6ed',
+                        }
+                    }}><AddIcon /></Button>
+                </TableCell>
+            </TableRow>
 
             <Modal
                 open={open}
@@ -71,7 +83,7 @@ function CreateCollectionButton() {
                             onChange={(e) => setC_Description(e.target.value)}
                         />
                         <br />
-                        <input type="submit" value={'Create'} style={{marginTop: '3rem', background:'#323f54', color: '#faf9f6', fontSize: 20, borderRadius: 5, padding: 10, paddingLeft:20, paddingRight:20 }}/>
+                        <input type="submit" value={'Submit'} style={{marginTop: '3rem', background:'#323f54', color: '#faf9f6', fontSize: 20, borderRadius: 5, padding: 10, paddingLeft:20, paddingRight:20 }}/>
                     </form>
                 </Box>
             </Modal>
