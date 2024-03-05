@@ -4,6 +4,13 @@
 
 The Redruth Reading Room serves as a platform for administrators to generate audio collections aimed at collecting oral testimonies from specific participants. Admin users have the capability to oversee and handle audio submissions, while participants can record and upload their audio responses
 
+## Project Documentation
+Comprehensive user and project code information: https://docs.google.com/document/d/1j3MFsgCvuR-3JhLWFGDM-n9m6-IklNo3FuLf6Yl22xQ/edit
+
+Website functionality walkthrough - Video:
+
+Codebase walkthrough - Video: 
+
 ## Current Functionality
 * Admin users can login
      - Email: test@gmail.com
@@ -33,6 +40,8 @@ This is what the user sees!
 * To run the application for development purposes run 'make'
 
   - This will start the application on 127.0.0.1:3000
+ 
+_Note_: If make is not installed on your machine, running npm install and npm start for the above two steps will work instead.
 
 
 # Redruth Reading Room Application - Server (redruthforged-server-master)
@@ -51,6 +60,8 @@ handles database reads/writes
 
 
     - This will start the application on 127.0.0.1:8000
+   
+_Note_: If make is not installed on your machine, running npm install and npm start for the above two steps will work instead.
 
 
 
