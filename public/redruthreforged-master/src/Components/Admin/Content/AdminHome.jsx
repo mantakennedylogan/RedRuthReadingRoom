@@ -5,12 +5,9 @@ import moment from 'moment';
 import PublicRecordButton from '../Buttons/PublicRecordButton';
 import PublicListenButton from '../Buttons/PublicListenButton';
 import NewCollection from '../util/NewCollection';
-<<<<<<< HEAD
 import NewPrompt from '../util/NewPrompt';
 import Grid from '@mui/material/Grid';
 import GetPromptURL from '../util/GetPromptURL';
-=======
->>>>>>> parent of fdc33543 (Merge pull request #7 from mantakennedylogan/create-prompt)
 
 // This component returns the 'home' view of the admin page, AKA the user's collections.
 // Returns some text and the table of collections/collection-related buttons
@@ -34,7 +31,6 @@ function AdminHome(props) {
 
 	return (
 		<Box>
-<<<<<<< HEAD
 
 			<Grid container spacing={3}>
 				<Grid xs={.2}></Grid>
@@ -57,9 +53,7 @@ function AdminHome(props) {
 
 			<br />
 
-=======
 			<Typography variant='h4'>Collections</Typography>
->>>>>>> parent of fdc33543 (Merge pull request #7 from mantakennedylogan/create-prompt)
 			<TableContainer component={Paper}>
 				<Table>
 					<TableHead>
