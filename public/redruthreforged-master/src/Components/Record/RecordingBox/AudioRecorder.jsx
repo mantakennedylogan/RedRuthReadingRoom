@@ -102,7 +102,7 @@ const AudioRecorder = (props) => {
 
 
 	const uploadAudio = async () => {
-		//if(!alert('Your submission has been sent!')){window.location.reload();}
+		if(!alert('Your submission has been sent!')){window.location.reload();}
 		
 		try {
 		  const formData = new FormData();
