@@ -4,18 +4,23 @@
 
 The Redruth Reading Room serves as a platform for administrators to generate audio collections aimed at collecting oral testimonies from specific participants. Admin users have the capability to oversee and handle audio submissions, while participants can record and upload their audio responses
 
+## Project Documentation
+Comprehensive user and project code information: https://docs.google.com/document/d/1j3MFsgCvuR-3JhLWFGDM-n9m6-IklNo3FuLf6Yl22xQ/edit
+
+Website functionality walkthrough - Video:
+
+Codebase walkthrough - Video: 
+
 ## Current Functionality
-* Admin users can login
+* Home page: Welcomes user with a website description and introductory content. 
+* Settings/Login: A test admin account can be logged into an existing account using the following credentials:
      - Email: test@gmail.com
      - Password: @Test123
-* Home page has introductory content
-* Record page
-      - Displays error when invalid prompt url is given
-       - If given valid prompt url, prompt and discription appears along with a place to record and submit the audio recording
-* Research Tab
-     - Home: All current collections appear with accurate collection information
-     - Inbox: all submitted audios appear. Audio playback currently unavailable, but response display is visible and accurate.
-     - Edit & Publish: To be implemented 
+* Record page: The public can access record pages that are associated with a prompt. A recording can be made on the device and uploaded to the website along with info about who made the recording (name, phone number, etc.).
+* Research Tab: Admin users who are logged into the account have access to several tabs to help them manage collections, prompts, and recordings they receive. Info about each tab is seen below.
+     - Home: All collections appear along with collection information. User can create a new collection or prompt along with generate a shareable link to receive recordings.
+     - Edit/Listen: User can listen to all the recordings that have been uploaded to a specific collection and prompt.
+     - Inbox & Publish: To be implemented 
 
 
 #  Redruth Reading Room Application - React Client (redruthforged-master)
@@ -33,6 +38,8 @@ This is what the user sees!
 * To run the application for development purposes run 'make'
 
   - This will start the application on 127.0.0.1:3000
+ 
+_Note_: If make is not installed on your machine, running npm install and npm start for the above two steps will work instead.
 
 
 # Redruth Reading Room Application - Server (redruthforged-server-master)
@@ -51,6 +58,8 @@ handles database reads/writes
 
 
     - This will start the application on 127.0.0.1:8000
+   
+_Note_: If make is not installed on your machine, running npm install and npm start for the above two steps will work instead.
 
 
 
