@@ -36,7 +36,7 @@ function Navbar() {
             </Box>
         
             <Box sx={{display:'flex'}}>
-                <NavbarButton link="/listen" name="Listen" />
+                
                 <div>
                     {status ?
                         <AccountMenu  />

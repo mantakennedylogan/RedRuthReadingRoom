@@ -27,33 +27,30 @@ function AdminHome(props) {
 	useEffect(() => {
 		clearCurrResponse(); // Clear currently selected response
 	}, [])
-	
-
+	//				<Grid xs={.2} sx={{}}></Grid>s
 	return (
 		<Box>
 
-			<Grid container spacing={3}>
-				<Grid xs={.2}></Grid>
+			<Grid container  Collumspacing={3} >
 				
-				<Grid xs={7}>
+				<Grid  xs={6} sm={6} md={6} lg={6} xl={6}>
 					<Typography variant='h4'>Collections</Typography>
 				</Grid>
-				<Grid xs={1.4} sx={{}}>
+				<Grid  xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
 					<GetPromptURL />
 				</Grid>
-				<Grid xs={.2} sx={{}}></Grid>
-				<Grid xs={1} sx={{}}>
+				<Grid xs={.1} sm={.1} md={.1} lg={.1} xl={.1}></Grid>
+				<Grid  xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
 					<NewCollection />
 				</Grid>
-				<Grid xs={.2} sx={{}}></Grid>
-				<Grid xs={1}>
+				<Grid xs={.1} sm={.1} md={.1} lg={.1} xl={.1}></Grid>
+				<Grid  xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
 					<NewPrompt />
 				</Grid>
 			</Grid>
 
 			<br />
 
-			<Typography variant='h4'>Collections</Typography>
 			<TableContainer component={Paper}>
 				<Table>
 					<TableHead>
