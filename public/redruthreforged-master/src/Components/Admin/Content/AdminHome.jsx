@@ -76,7 +76,7 @@ function AdminHome(props) {
 							</TableRow>
 							)
 						})}
-						<NewCollection />
+						
 					</TableBody>
 				</Table>
 			</TableContainer>
