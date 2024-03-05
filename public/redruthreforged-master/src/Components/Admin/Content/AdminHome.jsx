@@ -1,4 +1,4 @@
-import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Modal, Collapse } from '@mui/material'
+import { Box, Button, Paper, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Typography, Modal } from '@mui/material'
 import React, { useContext, useState, useEffect } from 'react'
 import AdminContext from '../../../Context/AdminContext';
 import moment from 'moment';
@@ -27,26 +27,24 @@ function AdminHome(props) {
 	useEffect(() => {
 		clearCurrResponse(); // Clear currently selected response
 	}, [])
-	
-
+	//				<Grid xs={.2} sx={{}}></Grid>s
 	return (
 		<Box>
 
-			<Grid container spacing={3}>
-				<Grid xs={.2}></Grid>
+			<Grid container  Collumspacing={3} >
 				
-				<Grid xs={7}>
+				<Grid  xs={6} sm={6} md={6} lg={6} xl={6}>
 					<Typography variant='h4'>Collections</Typography>
 				</Grid>
-				<Grid xs={1.4} sx={{}}>
+				<Grid  xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
 					<GetPromptURL />
 				</Grid>
-				<Grid xs={.2} sx={{}}></Grid>
-				<Grid xs={1} sx={{}}>
+				<Grid xs={.1} sm={.1} md={.1} lg={.1} xl={.1}></Grid>
+				<Grid  xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
 					<NewCollection />
 				</Grid>
-				<Grid xs={.2} sx={{}}></Grid>
-				<Grid xs={1}>
+				<Grid xs={.1} sm={.1} md={.1} lg={.1} xl={.1}></Grid>
+				<Grid  xs="auto" sm="auto" md="auto" lg="auto" xl="auto">
 					<NewPrompt />
 				</Grid>
 			</Grid>
@@ -66,12 +64,10 @@ function AdminHome(props) {
 						</TableRow>
 					</TableHead>
 					<TableBody>
-						
 						{collections.map((collection) => {
 							return (
 							<TableRow sx={rowStyle} key={collection.collection_id} >
 								<TableCell onClick={() => updateCurrCollection(collection.collection_id, collection.title)}>{collection.title}</TableCell>
-									
 								<TableCell onClick={() => updateCurrCollection(collection.collection_id, collection.title)}>{collection.file_count}</TableCell>
 								<TableCell onClick={() => updateCurrCollection(collection.collection_id, collection.title)}>{collection.unlistened_count}</TableCell>
 								<TableCell onClick={() => updateCurrCollection(collection.collection_id, collection.title)}>{moment.utc(collection.created_dt).format("MMM Do, YYYY")}</TableCell>

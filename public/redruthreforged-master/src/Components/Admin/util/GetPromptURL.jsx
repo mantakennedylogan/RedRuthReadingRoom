@@ -52,7 +52,7 @@ function GetPromptURL() {
         console.log(promptName)
         var pid = await axios.get('/api/admin/getPromptId?prompt_name='+promptName)
         console.log(pid)
-        setText("https://redruth-reading-room.vercel.app/record/" + pid.data[0].prompt_id)
+        setText("https://redruth-reading-room-ten.vercel.app/record/" + pid.data[0].prompt_id)
 
         // setOpen(false)
         // window.location.reload()

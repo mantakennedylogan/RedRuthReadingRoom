@@ -43,6 +43,7 @@ function AdminEdit() {
         console.log('nothing In The Response This should never hapen')
       }
       else{
+        //console.log(response)
         let audioList = []
         for ( let i = 0; i < response.data.length; i++){
           
@@ -53,7 +54,13 @@ function AdminEdit() {
         }
   
         setAudioUrlList(audioList)
+
+        if(audioList.length == 0){
+
+          setwaitingText('Please wait while we get your data')
+        }
       } 
+
       setvis(true)
     }
   

@@ -7,7 +7,6 @@ import Navbar from '../Navbar/Navbar'
 import Admin from '../Admin/Admin'
 import Home from '../Home/Home'
 import Record from '../Record/Record'
-import Listen from '../Listen/Listen'
 import NotFound from '../Errors/NotFound'
 import SignUp from '../SignUp';
 import Login from '../Login';
@@ -32,7 +31,6 @@ function App() {
             <Box sx={safeContentArea}>
               <Routes>
                 <Route path="/" element={<Home />} />
-                <Route path="/listen" element={<Listen />} />
                 <Route path="/record" element={<Record />}>
                   <Route path=':prompt_id_url' />
                 </Route>

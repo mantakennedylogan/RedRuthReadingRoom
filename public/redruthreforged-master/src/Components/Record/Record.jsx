@@ -55,22 +55,6 @@ function Record() {
                 </>
             }
 
-            {/* DONT REALLY NEED THIS SINCE THERE IS NO PUBLIC RECORDING LINK ANYMORE - KEEPING UNTIL WE FULLY AGREE ON THIS */}
-            {/* {validatedPrompt ?
-                <RecordingBox prompt={prompt} desc={desc} promptid={promptID}/>
-                :
-                <>
-                <p>Welcome to the record page! Since you didn't put a promptid in your url (or it's not valid for whatever reason), here are some instructions on how to record.</p>
-                <ol>
-                    <li>Contact your researcher and get the direct prompt link from them.</li>
-                    <li>Review the prompt on the screen before beginning recording.</li>
-                    <li>Click the large record button to begin recording. NOTE, you may have to grant permissions for your web browser to access your microphone.</li>
-                    <h3>INSTRUCTIONS IMAGE HERE</h3>
-                    <li>Once you're done recording, click the large record button to stop recording. If the timer runs out, the recording will stop automatically.</li>
-                    <li>Enter the required information (denoted with an asterisk), then optionally fill out the remaining fields. The optional information will likely help the researcher.</li>
-                    <li>Hit submit and you're done!</li>
-                </ol>
-            </>} */}
         </div>
     )
 }

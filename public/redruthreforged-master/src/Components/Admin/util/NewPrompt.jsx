@@ -83,7 +83,7 @@ function CreatePromptButton() {
                         <br />
                         <Box sx={{width: "400px", paddingRight: 3}}>
                             <Typography>{'Collection'}</Typography>
-                            <Select sx={{width: '100%', maxWidth: '400px', minWidth: '80px'}}
+                            <Select sx={{width: '84%', maxWidth: '400px', minWidth: '80px'}}
                             value={collectionName}
                             label="Collection"
                             onChange={handelCollectionChange}>
