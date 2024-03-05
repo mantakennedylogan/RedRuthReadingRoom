@@ -10,8 +10,7 @@ export default function SubmitForm() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    // alert(`Name: ${formData.name}, Email: ${formData.email}, Message: ${formData.message}`
-    );
+    // alert(`Name: ${formData.name}, Email: ${formData.email}, Message: ${formData.message}`);
 };
 
   return (
