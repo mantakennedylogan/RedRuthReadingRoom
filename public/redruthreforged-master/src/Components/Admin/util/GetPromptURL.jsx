@@ -118,9 +118,9 @@ function GetPromptURL() {
                         </Typography>
 
                         <br />
-                        <Box sx={{width: "400px", paddingRight: 3}}>
+                        <Box sx={{width: "100%", paddingRight: 3}}>
                             <Typography>{'Collection'}</Typography>
-                            <Select sx={{width: '100%', maxWidth: '400px', minWidth: '80px'}}
+                            <Select sx={{width: '80%', maxWidth: '400px', minWidth: '80px'}}
                             value={collectionName}
                             label="Collection"
                             onChange={handelCollectionChange}>
@@ -131,7 +131,7 @@ function GetPromptURL() {
                                 })}
                             </Select>
                             <Typography>{'Prompt'}</Typography>
-                            <Select sx={{width: '100%', maxWidth: '400px', minWidth: '80px'}}
+                            <Select sx={{width: '80%', maxWidth: '400px', minWidth: '80px'}}
                             value={promptName}
                             label="Prompt"
                             onChange={handelPromptChange}>

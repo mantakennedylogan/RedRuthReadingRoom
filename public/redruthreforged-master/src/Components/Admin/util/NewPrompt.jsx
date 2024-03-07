@@ -24,7 +24,7 @@ function CreatePromptButton() {
         top: '50%',
         left: '50%',
         transform: 'translate(-50%, -50%)',
-        width: 400,
+        width: "25%",
         bgcolor: 'white',
         border: '2px solid #000',
         boxShadow: 24,
@@ -81,9 +81,9 @@ function CreatePromptButton() {
                         </Typography>
 
                         <br />
-                        <Box sx={{width: "400px", paddingRight: 3}}>
+                        <Box sx={{width: "100%", paddingRight: 3}}>
                             <Typography>{'Collection'}</Typography>
-                            <Select sx={{width: '84%', maxWidth: '400px', minWidth: '80px'}}
+                            <Select sx={{width: '100%', maxWidth: '400px', minWidth: '80px'}}
                             value={collectionName}
                             label="Collection"
                             onChange={handelCollectionChange}>

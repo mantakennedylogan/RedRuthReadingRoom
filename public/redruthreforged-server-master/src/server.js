@@ -232,6 +232,20 @@ server.post('/api/admin/createcollection/', (req, res) => {
         });
 })
 
+server.post('/api/admin/createprompt/', (req, res) => {
+    const info = req.body;
+    var user_id = 12345
+    var collection_id = info.cID;
+    var pName = info.pName;
+    var pDescription = info.pDescription;
+    
+    // add collection to database
+    connection.query('Insert into t_prompt (collection_id,user_id,prompt,description,created_dt) values (?, ? , ?, ?,CURDATE())', [collection_id, user_id, pName, pDescription], function (error, results, fields) {
+        if (error) throw error;
+        res.json(results);
+        });
+})
+
 // Multer Configuration
 const multer = require('multer');
 const storage = multer.diskStorage({
