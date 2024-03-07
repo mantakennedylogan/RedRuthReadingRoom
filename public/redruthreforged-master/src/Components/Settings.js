@@ -6,8 +6,9 @@ export default () => {
     const { status, data } = useContext(AccountContext);
     return (
         <div className = "settings">
-            <h2>Settings</h2>
-            <h3>Hello </h3>
+            <br></br>
+            <h1 style={{textAlign: 'center'}}>Settings</h1>
+            <br></br>
             <ChangePassword/>
              
         </div>
